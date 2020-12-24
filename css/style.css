@@ -8,11 +8,11 @@ margin: 5px auto;
 height: 100%;
 }
 
-#loader{
-margin: auto;
+#loaderGif{
+margin: 0 auto;
 height: 50vh;
-text-align: center;
-align-items: center;
+/* display: block; */
+/* align-items: center; */
 }
 
 .row{

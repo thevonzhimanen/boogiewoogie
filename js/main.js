@@ -12,12 +12,13 @@ function fetchdata() {
     },
     beforeSend: function(){
       // Show image container
-      $("#loader").show();
+      $("#loaderGif").css("display:block !important");
+      $("#loaderGif").show();
      },
     //automated requests every half hour
     complete: function (data) {
       setTimeout(fetchdata, 1800000);
-      $("#loader").hide();
+      $("#loaderGif").hide();
       // setTimeout(fetchdata, 15000);
     }
   }).done(function (data) {
