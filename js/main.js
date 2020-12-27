@@ -1,10 +1,21 @@
 console.log('js Loaded');
 
+
+// const express = require('express');
+// const app = express();
+// app.listen(3000,() => console.log('listening at 3000'));
+// app.use(express.static('../'));
+
+//needed to do npm install.....
+//npm install jquery --save
+// var $ = require("jquery");
+
 // request from API
+
 function fetchdata() {
 
   $.ajax({
-    url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json",
+    url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?borough=Manhattan",
     type: "GET",
     data: {
       "$limit": 1024,
@@ -12,7 +23,7 @@ function fetchdata() {
     },
     beforeSend: function(){
       // Show image container
-      $("#loaderGif").css("display:block !important");
+      // $("#loaderGif").css("display:block !important");
       $("#loaderGif").show();
      },
     //automated requests every half hour
@@ -24,6 +35,16 @@ function fetchdata() {
   }).done(function (data) {
     alert("Retrieved " + data.length + " records from the dataset!");
 
+
+    var dictstring = JSON.stringify(data);
+
+    //save json of last call
+    // var fs = require('fs');
+    // fs.writeFile("lastRequest.json", dictstring, function(err, result) {
+    // if(err) console.log('error', err);
+    //  });
+
+
     console.log(data);
 
     //display retrieved data sample in the browser
@@ -32,7 +53,7 @@ function fetchdata() {
     $("#speed").text("Speed of first...Make Avg TBD:" + data[0]['speed']);
 
     // $('body').css('color', 'yellow')
-    colors = { 'blue': '#000000', 'red': '#000000', 'yellow': '#000000' }
+
 
     // speed1 = data[0]['speed']
     //debug check: change the browser css based on retrieved data
@@ -61,7 +82,7 @@ function fetchdata() {
     vH_unscaled = $(window).innerHeight();
     vH = .70 * vH_unscaled
     vW_unscaled = $(window).innerWidth();
-    vW = vW_unscaled 
+    vW = vW_unscaled
     redraw(vH,vW)
 
     //set rectangle sizes
@@ -106,22 +127,22 @@ function fetchdata() {
         .data(data)
         .enter()
         .append("rect")
-        // .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis) 
+        // .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
         // .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
         //vH / 32 is the size of a square
-        .attr("x", (d, i) => vH / 32 * (i % 32 )) //arrays columns of rectangles (x-axis) 
+        .attr("x", (d, i) => vH / 32 * (i % 32 )) //arrays columns of rectangles (x-axis)
         .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
         .attr("height", vH / 32) // assigns height to predefined height
         .attr("width", vH / 32) // assigns width to predefined width
         .attr("stroke", "white") //creates a stroke around the rectangle
         //color based on speed
         .attr("fill", function (d) {
-          if (d['speed'] > 45) {
+          if (d['speed'] > 20) {
             return "blue";
           } else if (d['speed'] > 10) {
-            return "red";
+            return "yellow";
           }
-          return "yellow";
+          return "red";
         })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
@@ -133,8 +154,7 @@ function fetchdata() {
 };
 
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
-//automate 
+//automate
 $(document).ready(function () {
   setTimeout(fetchdata,400);
 });
-
