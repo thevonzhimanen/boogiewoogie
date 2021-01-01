@@ -2,82 +2,77 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
 
-  <!-- Custom Styling -->
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom Styling -->
+    <link rel="stylesheet" href="css/style.css">
 
-  <!-- Tooltip -->
-  <link rel="stylesheet" href="css/d3-tip.css">
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
- 
-  <title>Broadway Data Boogie Woogie</title>
+    <!-- Tooltip -->
+    <link rel="stylesheet" href="css/d3-tip.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+
+    <title>Broadway Data Boogie Woogie</title>
 
 </head>
 
 <style>
-  body {
-    background-color:#06112b;
-  }
-  </style>
+    body {
+        background-color: #06112b;
+    }
+</style>
 
 <body>
-  <h1 id="mainHeader" class="text glow"> Broadway Data Boogie Woogie</h1>
-  <h2 class="text glow">NYC Traffic Speeds1</h2>
-  <!-- Canvas -->
-  <!-- <div id='loader' style='display: none;'> -->
 
-  <iframe src="https://giphy.com/embed/ToMjGpogGCQfPsiTUB2" width="480" height="360" frameBorder="0" id='loaderGif' class="giphy-embed" allowFullScreen style="display:block;"></iframe>
 
-  <!-- <img src ="/gifs/loading.gif" width="480" height="360" id ="loaderGif" class="giphy-embed"    allowFullScreen style="display:block;"></img> -->
+    <!-- Canvas -->
+    <iframe src="https://giphy.com/embed/ToMjGpogGCQfPsiTUB2" width="480" height="360" frameBorder="0" id='loaderGif' class="giphy-embed" allowFullScreen style="display:block;"></iframe>
 
-  <!-- <img src="/gifs/image.png" width="480" height="360"></img> -->
+    <!-- <img src ="/gifs/loading.gif" width="480" height="360" id ="loaderGif" class="giphy-embed"    allowFullScreen style="display:block;"></img> -->
 
-    <!-- <p><a href="https://giphy.com/gifs/alexapostolides-mondrian-alex-apostolides-design-ToMjGpogGCQfPsiTUB2">via GIPHY</a></p> -->
+    <!-- <img src="/gifs/image.png" width="480" height="360"></img> -->
 
-  <!-- <iframe src ="https://nyctmc.org/google_popup.php?cid=691" width="480" height="360" frameBorder="0" id='vidFeed' class="vid2" style="display:block;"></iframe> -->
+    <div class="grid-container">
 
-  <div class="container">
-      <div>
-        <p id="date" class="text glow"> "Date: "  </p>
-        <p id="time" class="text glow" > "Last Updated Time: "  </p>
-        <p id="speed" class="text glow"> "Average Speed: "  </p>
-      </div>
-    <div class="row">
-      <div id="chartArea"> </div>
+        <div id="titleHead">
+            <h1 id="mainHeader" class="text glow"> Broadway Data Boogie Woogie</h1>
+            <h2 class="text glow">NYC Traffic Speeds1</h2>
+        </div>
+
+        <div id="subText">
+            <p id="date" class="text glow subText"> "Date: " </p>
+            <p id="time" class="text glow subText"> "Last Updated Time: " </p>
+            <p id="speed" class="text glow subText"> "Average Speed: " </p>
+        </div>
+
+        <div id="chartArea"> </div>
+
+        <div id="clock"> </div>
+
     </div>
-  </div>
 
 
 
 
+    <!-- External JS libraries -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
 
-  <!-- External JS libraries -->
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
+    <script src="js/d3-tip.js"></script>
 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-
-  <script src="js/d3-tip.js"></script>
-
-  <!-- Custom JS -->
-  <script src="js/main.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
 
 </body>
 

@@ -45,7 +45,6 @@ function fetchdata() {
   }).done(function (data) {
     alert("Retrieved " + data.length + " records from the dataset!");
 
-
     // screenshot of website
     // const fs = require('fs');
     // const fetch = require('node-fetch');
@@ -58,10 +57,6 @@ function fetchdata() {
     //   fs.writeFile(`./image.jpg`, buffer, () => 
     //     console.log('finished downloading!'));
     // }
-
-
-
-
 
     var dictstring = JSON.stringify(data);
 
@@ -77,11 +72,9 @@ function fetchdata() {
     //display retrieved data sample in the browser
     $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
     $("#time").text("Last updated time: " + data[0]["data_as_of"].substring(11, 16));
-    $("#speed").text("Speed of first...Make Avg TBD:" + data[0]['speed']);
+    $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
 
     // $('body').css('color', 'yellow')
-
-
     // speed1 = data[0]['speed']
     //debug check: change the browser css based on retrieved data
     // if (speed1 > 10) {
@@ -185,6 +178,22 @@ function fetchdata() {
 
   )
 };
+
+function updateTime(){
+  var d = new Date();
+  hrT = d.getHours(); 
+  minT = d.getMinutes(); 
+  secT = d.getSeconds(); 
+  $('#clock').text(d)
+}
+
+setInterval(updateTime, 1000)
+
+
+
+
+
+
 
 
 
