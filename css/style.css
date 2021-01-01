@@ -1,3 +1,7 @@
+body {
+    background-color: black important!;
+}
+
 .container{
 margin: 5px auto;
 }
@@ -23,4 +27,48 @@ height: 50vh;
     margin: 2px auto;
     text-align: center;
     word-wrap: break-word;
+    font-family: 'Montserrat', sans-serif;
 }
+
+
+      /* // blue
+      return "#04bcbe";
+
+      // yellow
+      return "#eceb66";
+
+    // red
+    return "#eb1044"; */
+
+h1{
+    color: #ff6661;
+}
+
+h2{
+    color:#4cbb9a;
+}
+
+p{
+    color: #518cd0;
+}
+/* 
+yellow */
+/* ffd861 */
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_glowing_text */
+/* .glow {
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+    
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+  } */

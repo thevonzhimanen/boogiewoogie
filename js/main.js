@@ -1,5 +1,6 @@
 console.log('js Loaded');
 
+// var domtoimage = require('dom-to-image');
 
 // const express = require('express');
 // const app = express();
@@ -31,9 +32,35 @@ function fetchdata() {
       setTimeout(fetchdata, 1800000);
       $("#loaderGif").hide();
       // setTimeout(fetchdata, 15000);
+
+      //https://stackoverflow.com/questions/36941042/convert-div-into-downloadable-image/47917770
+      // var node = document.getElementById('chartArea');
+      // node.innerHTML = "I'm an image now."
+      // domtoimage.toBlob(document.getElementById('chartArea'))
+      //   .then(function(blob) {
+      //     window.saveAs(blob, 'chartArea.png');
+      //   });
+
     }
   }).done(function (data) {
     alert("Retrieved " + data.length + " records from the dataset!");
+
+
+    // screenshot of website
+    // const fs = require('fs');
+    // const fetch = require('node-fetch');
+    
+    // const url = "https://www.something.com/.../image.jpg"
+    
+    // async function download() {
+    //   const response = await fetch(url);
+    //   const buffer = await response.buffer();
+    //   fs.writeFile(`./image.jpg`, buffer, () => 
+    //     console.log('finished downloading!'));
+    // }
+
+
+
 
 
     var dictstring = JSON.stringify(data);
@@ -61,7 +88,6 @@ function fetchdata() {
     //   $('body').css('color', 'blue')
     // }
     //_______________________________________________________________________________
-
     //d3
 
     //clear canvas for new data load...
@@ -115,8 +141,8 @@ function fetchdata() {
         .attr('class', 'd3-tip')
         .html(d => d)
         .html(d => {
-          let text = "<span>Borough: </span>" + d['borough'] + ',  '
-          text += "<span>Location: </span>" + d['link_name'] + ',  '
+          let text = "<span>Borough: </span>" + d['borough'] + ',     '
+          text += "<span>Location: </span>" + d['link_name'] + ',     '
           text += "<span>Speed: </span>" + d['speed']
           return text;
         })
@@ -134,15 +160,22 @@ function fetchdata() {
         .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
         .attr("height", vH / 32) // assigns height to predefined height
         .attr("width", vH / 32) // assigns width to predefined width
-        .attr("stroke", "white") //creates a stroke around the rectangle
+        .attr("stroke", "#06112b") //creates a stroke around the rectangle
         //color based on speed
         .attr("fill", function (d) {
           if (d['speed'] > 20) {
-            return "blue";
+            // blue
+            // return "#518cd0";
+            // return "#04bcbe";
+            return "#518cd0";
           } else if (d['speed'] > 10) {
-            return "yellow";
+            // yellow
+            // return "#ffd861";
+            return "#eceb66";
           }
-          return "red";
+          // red
+          return "#ff6661";
+          // return "#eb1044";
         })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
@@ -153,8 +186,11 @@ function fetchdata() {
   )
 };
 
+
+
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
+//use express on ready if using node.js
 $(document).ready(function () {
   setTimeout(fetchdata,400);
 });

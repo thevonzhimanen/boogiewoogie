@@ -15,14 +15,22 @@
   <!-- Tooltip -->
   <link rel="stylesheet" href="css/d3-tip.css">
 
-
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+ 
   <title>Broadway Data Boogie Woogie</title>
 
 </head>
 
+<style>
+  body {
+    background-color:#06112b;
+  }
+  </style>
+
 <body>
-  <h1 id="mainHeader" class="text"> Broadway Data Boogie Woogie</h1>
-  <h2 class="text">NYC Traffic Speeds1</h2>
+  <h1 id="mainHeader" class="text glow"> Broadway Data Boogie Woogie</h1>
+  <h2 class="text glow">NYC Traffic Speeds1</h2>
   <!-- Canvas -->
   <!-- <div id='loader' style='display: none;'> -->
 
@@ -34,20 +42,20 @@
 
     <!-- <p><a href="https://giphy.com/gifs/alexapostolides-mondrian-alex-apostolides-design-ToMjGpogGCQfPsiTUB2">via GIPHY</a></p> -->
 
+  <!-- <iframe src ="https://nyctmc.org/google_popup.php?cid=691" width="480" height="360" frameBorder="0" id='vidFeed' class="vid2" style="display:block;"></iframe> -->
 
   <div class="container">
       <div>
-        <p id="date" class="text"> "Date: "  </p>
-        <p id="time" class="text" > "Last Updated Time: "  </p>
-        <p id="speed" class="text"> "Average Speed: "  </p>
+        <p id="date" class="text glow"> "Date: "  </p>
+        <p id="time" class="text glow" > "Last Updated Time: "  </p>
+        <p id="speed" class="text glow"> "Average Speed: "  </p>
       </div>
     <div class="row">
       <div id="chartArea"> </div>
-
-
-
     </div>
   </div>
+
+
 
 
 
@@ -66,16 +74,13 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
 
-
-  <!-- <script src="js/d3-tip.js"></script> -->
+  <script src="js/d3-tip.js"></script>
 
   <!-- Custom JS -->
   <script src="js/main.js"></script>
 
-  <script src="js/d3-tip.js"></script>
-
-
-
 </body>
+
+
 
 </html>
