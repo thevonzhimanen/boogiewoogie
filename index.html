@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Custom Styling -->
+
+    <!-- Add HTML STYLESHEET RESET!!!!!!!!!!!! -->
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Bootstrap -->
@@ -49,11 +51,18 @@
         <div id="subText">
             <p id="date" class="text glow subText"> "Date: " </p>
             <p id="time" class="text glow subText"> "Last Updated Time: " </p>
-            <p id="speed" class="text glow subText"> "Average Speed: " </p>
+            <!-- <p id="speed" class="text glow subText"> "Average Speed: " </p> -->
         </div>
 
         <div id="chartArea">
 
+        </div>
+
+        <div id="legendWrapper">
+            <!-- <div id="legend" class="legend text">LEGEND</div> -->
+            <div id="slow" class="legend legInline">SLOW</div>
+            <div id="moderate" class="legend legInline">MODERATE</div>
+            <div id="fast" class="legend legInline">FAST</div>
         </div>
 
         <div id="clock"> </div>
@@ -64,7 +73,7 @@
 
         <div id="description">
             <p class="descriptionText">ABOUT:</p>
-            <P class="descriptionText">DATA SOURCE: <a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal</a>
+            <P class="descriptionText">DATA SOURCE: <a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal API</a>
         </div>
         </p>
     </div>

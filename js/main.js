@@ -87,10 +87,9 @@ function fetchdata() {
 
             //create Boogie Woogie canvas
             const svg = d3.select("#chartArea").append("svg")
-                // .attr("width", "70vh")
+                //canvas height and width
                 .attr("width", "70vh")
-                .attr("height", "70%")
-                // .attr("height", "100%")
+                .attr("height", "70vh")
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
 
@@ -99,7 +98,7 @@ function fetchdata() {
             vH_unscaled = $(window).innerHeight();
             vH = .70 * vH_unscaled
             vW_unscaled = $(window).innerWidth();
-            vW = vW_unscaled
+            vW = .70 * vW_unscaled
             redraw(vH, vW)
 
             //set rectangle sizes
@@ -111,7 +110,7 @@ function fetchdata() {
                 vH_unscaled = $(this).innerHeight();
                 vW_unscaled = $(this).innerWidth();
                 vH = .70 * vH_unscaled
-                vW = vW_unscaled
+                vW = .70 * vW_unscaled
                 console.log("resize");
                 redraw(vH, vW);
             })
@@ -121,6 +120,7 @@ function fetchdata() {
                 svg.selectAll("*").remove();
                 vH = viewportHeight;
                 vW = viewportWidth;
+
                 rectHeight = vH / 32;
                 rectWidth = rectHeight;
                 //change rectangle size based on new canvas size
@@ -149,8 +149,8 @@ function fetchdata() {
                     //vH / 32 is the size of a square
                     .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                    .attr("height", vH / 32) // assigns height to predefined height
-                    .attr("width", vH / 32) // assigns width to predefined width
+                    .attr("height", vH / 32) // assigns height of rectangles to predefined height
+                    .attr("width", vH / 32) // assigns width of rectangles to predefined width
                     .attr("stroke", "#06112b") //creates a stroke around the rectangle
                     //color based on speed
                     .attr("fill", function(d) {
