@@ -40,10 +40,24 @@
     grid-column: 1;
     grid-row: 3/ span 1;
     background-color: #142650;
-    margin: 10px 10px 150px 50px;
+    margin: 20px;
     overflow: scroll;
     align: center;
     color: #ff6661;
+    padding: 20px;
+}
+
+#description {
+    grid-column: 3;
+    grid-row: 3/ span 1;
+    background-color: #142650;
+    color: #ff6661;
+    margin: 20px 40px 20px 20px;
+    align: center;
+}
+
+.descriptionText {
+    padding: 20px;
 }
 
 #loaderGif {
