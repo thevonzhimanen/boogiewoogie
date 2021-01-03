@@ -36,6 +36,9 @@ body {
     grid-row: 5/ span 1;
     text-align: center;
     color: #eceb66;
+    color: #142650;
+    font-family: 'Montserrat', sans-serif;
+    /* background-color: #142650; */
     /* position: absolute;
     bottom: 0;
     right: 0; */
@@ -83,23 +86,31 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.legend {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
 #slow {
-    color: #06112b;
-    background-color: #ff6661;
+    /* color: #06112b;
+    background-color: #ff6661; */
+    color: #ff6661;
     margin: auto 50px;
     padding: auto 20px;
 }
 
 #moderate {
-    color: #06112b;
-    background-color: #eceb66;
+    /* color: #06112b;
+    background-color: #eceb66; */
+    color: #eceb66;
     margin: auto 50px;
     padding: auto 20px;
 }
 
 #fast {
-    color: #06112b;
-    background-color: #518cd0;
+    /* color: #06112b;
+    background-color: #518cd0; */
+    color: #518cd0;
     margin: auto 50px;
     padding: auto 150px;
     width: 200px;
