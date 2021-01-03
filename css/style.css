@@ -45,6 +45,7 @@
     align: center;
     color: #ff6661;
     padding: 20px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #description {
@@ -54,6 +55,7 @@
     color: #ff6661;
     margin: 20px 40px 20px 20px;
     align: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .descriptionText {
