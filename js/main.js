@@ -16,7 +16,8 @@ console.log('js Loaded');
 function fetchdata() {
 
     $.ajax({
-        url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?borough=Manhattan",
+        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?borough=Manhattan",
+        url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
         type: "GET",
         data: {
             "$limit": 1024,
