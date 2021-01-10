@@ -1,5 +1,5 @@
 console.log('js Loaded');
-
+// console.log(encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC"))
 // var domtoimage = require('dom-to-image');
 
 // const express = require('express');
@@ -16,8 +16,8 @@ console.log('js Loaded');
 function fetchdata() {
 
     $.ajax({
-        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?borough=Manhattan",
-        url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
+        url : encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
+        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
         type: "GET",
         data: {
             "$limit": 1024,
@@ -29,6 +29,9 @@ function fetchdata() {
             $("#loaderGif").show();
         },
         //automated requests every half hour
+
+        
+
         complete: function(data) {
             setTimeout(fetchdata, 1800000);
             $("#loaderGif").hide();
