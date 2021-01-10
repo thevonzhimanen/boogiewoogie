@@ -188,42 +188,43 @@ function fetchdata() {
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
             }
+        // cache data from api:
+
+        //take rects svg and store it as variable; name it 'svg' plus the date for a unique name
+        //save svg to firebase
+        //script for populating the Archive Gallery with all past svgs
+
+        var t = new Date();
+        var timeid = t.getTime();
+        var filename = "svg-"+"timeid";
+        console.log(t, timeid, filename);
+    
+        function writeUserData(entryname, timeid, rects) {
+            database.ref('images/' + filename).set(
+                {
+                id: timeid,
+                data: rects
+                }
+            );
         }
-        // cache data from api
             
-            //take rects svg and store it as svg
-            //name it rects plus the date for a unique name
-            //save svg to firebase
-            //script for populating the Archive Gallery with all past svgs
-            
-            var t = new Date();
-            var timeid = t.getTime();
-            var filename = "svg-"+"timeid";
-            
-    
-    function writeUserData(entryname, timeid, rects) {
-    database.ref('images/' + filename).set(
-        {
-        id: timeid,
-        data: rects
-        }
-  );
-}
-    
-/*
-//THIS IS FOR FIREBASE STORAGE, NOT REALTIME DATABASE:
-//create Firebase Storage reference:
-//var storage = firebase.storage();
-//var storageRef = storage.ref();
-//var imagesRef = storageRef.child('images');
-    
-//create unique file name with timestamp:
-var t = new Date();
-var timeid = t.getTime();
-var filename = "svg-"+"timeid";
-var svgref = imagesRef.child('filename');
-console.log(svgref.fullPath)
-*/  
+        /*
+        //THIS IS FOR FIREBASE STORAGE, NOT REALTIME DATABASE:
+        //create Firebase Storage reference:
+        var storage = firebase.storage();
+        var storageRef = storage.ref();
+        var imagesRef = storageRef.child('images');
+
+        //create unique file name with timestamp:
+        var t = new Date();
+        var timeid = t.getTime();
+        var filename = "svg-"+"timeid";
+        var svgref = imagesRef.child('filename');
+        console.log(svgref.fullPath)
+        */ 
+    }
+
+ 
     
     )
 };
