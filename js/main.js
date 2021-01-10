@@ -174,7 +174,10 @@ function fetchdata() {
             }
         }
         // cache data from api
-
+            //take rects svg and store it as svg
+            //name it rects plus the date for a unique name
+            //save svg to firebase
+            //script for populating the Archive Gallery with all past svgs
     )
 };
 
