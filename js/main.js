@@ -13,6 +13,19 @@ console.log('js Loaded');
 
 // request from API
 
+//Initialize Firebase
+var firebaseConfig = {
+    apiKey: "AIzaSyBdBvm5AKa6fI004M_9jf2n5nyVAHvVdZQ",
+    authDomain: "nyc-boogie-woogie.firebaseapp.com",
+    databaseURL: "https://nyc-boogie-woogie-default-rtdb.firebaseio.com",
+    projectId: "nyc-boogie-woogie",
+    storageBucket: "nyc-boogie-woogie.appspot.com",
+    messagingSenderId: "973992429447",
+    appId: "1:973992429447:web:e4cb07cebb830676d43522"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
 function fetchdata() {
 
     $.ajax({
