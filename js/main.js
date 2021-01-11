@@ -25,10 +25,42 @@ var firebaseConfig = {
   };
 firebase.initializeApp(firebaseConfig);
 
-var database = firebase.database();
+window.db = firebase.database();
+window.locRef = db.ref("images");
 
+//before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
+locRef.once("value", function fetcharchive(snapshot){
+    
+    /*
+    //user authentication for security:
+    var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
+        var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    // ...
+    });
+    */
+    
+        var dataOn = snapshot.val()
+        
+        //document.getElementById("chartArea").innerHTML=dataOn;
+            
+        //to populate the archive images, iterate over each past data entry
+        Object.keys(dataOn).forEach(function(key) {
+            console.log("Firebase snapshot: ", key, dataOn[key]);
+            //use dataOn[key].data to get the base64 version of each svg;
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(dataOn[key].data, "text/xml");
+            
+            var svgElement = document.createElement("svg");
+            svgElement.id = key;
+            svgElement.className = "archive";
+            svgElement.innerHTML = dataOn[key].data;
 
-
+            document.getElementById("archive").appendChild(svgElement);
+        
+        });
+    });
+                                
 function fetchdata() {
 
     $.ajax({
@@ -187,27 +219,33 @@ function fetchdata() {
                     })
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
-            }
-        // cache data from api:
+                                
+            }        
+    },
+    
+    // cache data from api:
 
-        //take rects svg and store it as variable; name it 'svg' plus the date for a unique name
-        //save svg to firebase
-        //script for populating the Archive Gallery with all past svgs
-
+    //take rects svg and store it as variable; name it 'svg' plus the date for a unique name
+    //save svg to firebase
+    //script for populating the Archive Gallery with all past svgs
+    
+    function writedata (){
         var t = new Date();
         var timeid = t.getTime();
-        var filename = "svg-"+"timeid";
-        console.log(t, timeid, filename);
-    
-        function writeUserData(entryname, timeid, rects) {
-            database.ref('images/' + filename).set(
-                {
-                id: timeid,
-                data: rects
-                }
+        var filename = "svg-"+timeid;
+        //how to take the svg/xml structure and simply write it to firebase?
+        var svg = document.getElementById("chartArea").getElementsByTagName("svg").item(0);
+        var data = (new XMLSerializer()).serializeToString(svg);
+        
+        console.log(t, timeid, filename, data);
+        
+        db.ref('images/' + filename).set(
+            {
+            id: filename,
+            data: data
+            }
             );
-        }
-            
+        
         /*
         //THIS IS FOR FIREBASE STORAGE, NOT REALTIME DATABASE:
         //create Firebase Storage reference:
@@ -222,11 +260,14 @@ function fetchdata() {
         var svgref = imagesRef.child('filename');
         console.log(svgref.fullPath)
         */ 
+        
     }
-
- 
     
     )
+    
+                                   
+
+
 };
 
 function updateTime() {
