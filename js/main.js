@@ -186,7 +186,8 @@ function fetchdata() {
                     .html(d => {
                         let text = "<span>Borough: </span>" + d['borough'] + ',     '
                         text += "<span>Location: </span>" + d['link_name'] + ',     '
-                        text += "<span>Speed: </span>" + d['speed']
+                        text += "<span>Speed: </span>" + d['speed'] + ',     '
+                        text += "<span>Speed: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
