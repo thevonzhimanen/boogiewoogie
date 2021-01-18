@@ -35,16 +35,16 @@
 
     <!-- Canvas -->
    
-    <!-- <img src ="/gifs/loading.gif" width="480" height="360" id ="loaderGif" class="giphy-embed"    allowFullScreen style="display:block;"></img> -->
-
-    <!-- <img src="/gifs/image.png" width="480" height="360"></img> -->
-
+ 
     <div class="grid-container">
 
         <div id="titleHead">
-            <h1 id="mainHeader" class="text glow">Broadway Boogie Woogie Reimagined</h1>
+            <h1 id="mainHeader" class="text glow">Broadway Data Boogie Woogie</h1>
             <h2 class="text glow">Near Real-Time Traffic Speeds</h2>
         </div>
+
+ 
+        <div id="chartArea"></div>
 
         <div id="subText">
             <p id="date" class="text glow subText"> "Date: " </p>
@@ -52,11 +52,10 @@
             <!-- <p id="speed" class="text glow subText"> "Average Speed: " </p> -->
         </div>
 
-        <div id="chartArea">
-
-        </div>
-
+        <!-- Need to update this gif placeholder -->
         <iframe src="https://giphy.com/embed/ToMjGpogGCQfPsiTUB2" width="480" height="360" frameBorder="0" id='loaderGif' class="giphy-embed" allowFullScreen style="display:block;"></iframe>
+
+           <!-- <img src ="/gifs/loading.gif" width="480" height="360" id ="loaderGif" class="giphy-embed"    allowFullScreen style="display:block;"></img> -->
 
 
         <div id="legendWrapper">
@@ -68,19 +67,14 @@
 
         <div id="clock"> </div>
 
+        <div id="archive" class="text scrollable-element">ARCHIVED CANVASES</div>
 
-
-        <div id="archive" class="text">ARCHIVED CANVASES</div>
-
-        <div id="description">
-            <p class="descriptionText">ABOUT:</p>
-            <P class="descriptionText">DATA SOURCE: <a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal API</a>
+        <div id="description" class= "scrollable-element">
+            <p class="descriptionText">ABOUT:
+                We have reimagined Piet Mondrian’s Broadway Boogie Woogie as a traffic data visualization, reinvigorating the century-old abstract art tradition for a 21st century context. <br> The NYC Open Data web platform hosts many datasets related to mobility, the most intriguing of which is the DOT’s real-time traffic speed dataset. We humbly recognize that the DOT has already created a much more useful visualization of traffic speeds which can be found at the following location: <a href='https://webcams.nyctmc.org/'>NYC TMC</a>. We’ve given ourselves a much simpler goal under the protections of artist expression to create a dynamic, two-dimensional update to Broadway Boogie Woogie. This dataset is updated every half hour, so the image will change in kind. 
+            <br><br> DATA SOURCE: <a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal API</a>  </p>
         </div>
-        </p>
     </div>
-
-
-
 
     <!-- External JS libraries -->
     <script src="https://d3js.org/d3.v5.min.js"></script>

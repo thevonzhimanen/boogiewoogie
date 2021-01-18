@@ -1,17 +1,4 @@
 console.log('js Loaded');
-// console.log(encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC"))
-// var domtoimage = require('dom-to-image');
-
-// const express = require('express');
-// const app = express();
-// app.listen(3000,() => console.log('listening at 3000'));
-// app.use(express.static('../'));
-
-//needed to do npm install.....
-//npm install jquery --save
-// var $ = require("jquery");
-
-// request from API
 
 //Initialize Firebase
 var firebaseConfig = {
@@ -60,7 +47,8 @@ locRef.once("value", function fetcharchive(snapshot){
         
         });
     });
-                                
+                       
+//request data from API    
 function fetchdata() {
 
     $.ajax({
@@ -84,54 +72,19 @@ function fetchdata() {
             setTimeout(fetchdata, 1800000);
             $("#loaderGif").hide();
             // setTimeout(fetchdata, 15000);
-
-            //https://stackoverflow.com/questions/36941042/convert-div-into-downloadable-image/47917770
-            // var node = document.getElementById('chartArea');
-            // node.innerHTML = "I'm an image now."
-            // domtoimage.toBlob(document.getElementById('chartArea'))
-            //   .then(function(blob) {
-            //     window.saveAs(blob, 'chartArea.png');
-            //   });
-
         }
+
     }).done(function(data) {
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
-            // screenshot of website
-            // const fs = require('fs');
-            // const fetch = require('node-fetch');
-
-            // const url = "https://www.something.com/.../image.jpg"
-
-            // async function download() {
-            //   const response = await fetch(url);
-            //   const buffer = await response.buffer();
-            //   fs.writeFile(`./image.jpg`, buffer, () => 
-            //     console.log('finished downloading!'));
-            // }
-
-            // var dictstring = JSON.stringify(data);
-
-            //save json of last call
-            // var fs = require('fs');
-            // fs.writeFile("lastRequest.json", dictstring, function(err, result) {
-            // if(err) console.log('error', err);
-            //  });
-
 
             //display retrieved data sample in the browser
             $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
             $("#time").text("Last updated time: " + data[0]["data_as_of"].substring(11, 16));
             $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
 
-            // $('body').css('color', 'yellow')
-            // speed1 = data[0]['speed']
-            //debug check: change the browser css based on retrieved data
-            // if (speed1 > 10) {
-            //   $('body').css('color', 'blue')
-            // }
-            //_______________________________________________________________________________
-            //d3
+            //d3 ____________________________________________________________________
+           
 
             //clear canvas for new data load...
             d3.select('#chartArea').selectAll('*').remove();
@@ -144,7 +97,6 @@ function fetchdata() {
                 .attr("height", "70vh")
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
-
 
             //
             vH_unscaled = $(window).innerHeight();
