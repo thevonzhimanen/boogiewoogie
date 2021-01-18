@@ -136,10 +136,10 @@ function fetchdata() {
                     .attr('class', 'd3-tip')
                     .html(d => d)
                     .html(d => {
-                        let text = "<span>Borough: </span>" + d['borough'] + ',     '
-                        text += "<span>Location: </span>" + d['link_name'] + ',     '
-                        text += "<span>Speed: </span>" + d['speed'] + ',     '
-                        text += "<span>Speed: </span>" + d['data_as_of']
+                        let text = "<span>Borough: </span>" + d['borough'] + '<br>'
+                        text += "<span>Location: </span>" + d['link_name'] + '<br>'
+                        text += "<span>Speed: </span>" + d['speed']  + '<br>'
+                        text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
