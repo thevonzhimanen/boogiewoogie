@@ -1,18 +1,5 @@
 console.log('js Loaded');
 
-// var domtoimage = require('dom-to-image');
-
-// const express = require('express');
-// const app = express();
-// app.listen(3000,() => console.log('listening at 3000'));
-// app.use(express.static('../'));
-
-//needed to do npm install.....
-//npm install jquery --save
-// var $ = require("jquery");
-
-// request from API
-
 //Initialize Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyBdBvm5AKa6fI004M_9jf2n5nyVAHvVdZQ",
@@ -50,22 +37,29 @@ locRef.once("value", function fetcharchive(snapshot){
             //use dataOn[key].data to get the base64 version of each svg;
             var parser = new DOMParser();
             var doc = parser.parseFromString(dataOn[key].data, "text/xml");
-            
+            //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
             var svgElement = document.createElement("svg");
             svgElement.id = key;
             svgElement.className = "archive";
             svgElement.innerHTML = dataOn[key].data;
 
+            var titleElement = document.createElement("p");
+            var archiveTitle = document.createTextNode(key.substr(4)+":");
+            titleElement.appendChild(archiveTitle);
+            
+            document.getElementById("archive").appendChild(titleElement);
             document.getElementById("archive").appendChild(svgElement);
+            //consider using createDocumentFragment() method?
         
         });
     });
-                                
+                       
+//request data from API    
 function fetchdata() {
 
     $.ajax({
-        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?borough=Manhattan",
-        url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
+        url : encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
+        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
         type: "GET",
         data: {
             "$limit": 1024,
@@ -77,58 +71,26 @@ function fetchdata() {
             $("#loaderGif").show();
         },
         //automated requests every half hour
+
+        
+
         complete: function(data) {
             setTimeout(fetchdata, 1800000);
             $("#loaderGif").hide();
             // setTimeout(fetchdata, 15000);
-
-            //https://stackoverflow.com/questions/36941042/convert-div-into-downloadable-image/47917770
-            // var node = document.getElementById('chartArea');
-            // node.innerHTML = "I'm an image now."
-            // domtoimage.toBlob(document.getElementById('chartArea'))
-            //   .then(function(blob) {
-            //     window.saveAs(blob, 'chartArea.png');
-            //   });
-
         }
+
     }).done(function(data) {
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
-            // screenshot of website
-            // const fs = require('fs');
-            // const fetch = require('node-fetch');
-
-            // const url = "https://www.something.com/.../image.jpg"
-
-            // async function download() {
-            //   const response = await fetch(url);
-            //   const buffer = await response.buffer();
-            //   fs.writeFile(`./image.jpg`, buffer, () => 
-            //     console.log('finished downloading!'));
-            // }
-
-            // var dictstring = JSON.stringify(data);
-
-            //save json of last call
-            // var fs = require('fs');
-            // fs.writeFile("lastRequest.json", dictstring, function(err, result) {
-            // if(err) console.log('error', err);
-            //  });
-
 
             //display retrieved data sample in the browser
             $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
             $("#time").text("Last updated time: " + data[0]["data_as_of"].substring(11, 16));
             $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
 
-            // $('body').css('color', 'yellow')
-            // speed1 = data[0]['speed']
-            //debug check: change the browser css based on retrieved data
-            // if (speed1 > 10) {
-            //   $('body').css('color', 'blue')
-            // }
-            //_______________________________________________________________________________
-            //d3
+            //d3 ____________________________________________________________________
+           
 
             //clear canvas for new data load...
             d3.select('#chartArea').selectAll('*').remove();
@@ -141,7 +103,6 @@ function fetchdata() {
                 .attr("height", "70vh")
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
-
 
             //
             vH_unscaled = $(window).innerHeight();
@@ -181,9 +142,10 @@ function fetchdata() {
                     .attr('class', 'd3-tip')
                     .html(d => d)
                     .html(d => {
-                        let text = "<span>Borough: </span>" + d['borough'] + ',     '
-                        text += "<span>Location: </span>" + d['link_name'] + ',     '
-                        text += "<span>Speed: </span>" + d['speed']
+                        let text = "<span>Borough: </span>" + d['borough'] + '<br>'
+                        text += "<span>Location: </span>" + d['link_name'] + '<br>'
+                        text += "<span>Speed: </span>" + d['speed']  + '<br>'
+                        text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
