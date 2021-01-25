@@ -62,7 +62,7 @@ function fetchdata() {
         // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
         type: "GET",
         data: {
-            "$limit": 1024,
+            "$limit": 2025,
             "$$app_token": "ReXNLc0gRAMKhmOChFYGqCdlk"
         },
         beforeSend: function() {
@@ -112,8 +112,8 @@ function fetchdata() {
             redraw(vH, vW)
 
             //set rectangle sizes
-            rectHeight = vH / 32;
-            rectWidth = vH / 32;
+            rectHeight = vH / 45;
+            rectWidth = vH / 45;
 
             //detect if window height changes
             $(window).on('resize', function() {
@@ -131,7 +131,7 @@ function fetchdata() {
                 vH = viewportHeight;
                 vW = viewportWidth;
 
-                rectHeight = vH / 32;
+                rectHeight = vH / 45;
                 rectWidth = rectHeight;
                 //change rectangle size based on new canvas size
                 console.log("rectHeight is now" + rectHeight);
@@ -155,13 +155,13 @@ function fetchdata() {
                     .data(data)
                     .enter()
                     .append("rect")
-                    // .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-                    // .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                    //vH / 32 is the size of a square
-                    .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-                    .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                    .attr("height", vH / 32) // assigns height of rectangles to predefined height
-                    .attr("width", vH / 32) // assigns width of rectangles to predefined width
+                    // .attr("x", (d, i) => vH / 45 * (i % 45)) //arrays columns of rectangles (x-axis)
+                    // .attr("y", (d, i) => vH / 45 * Math.floor(i / 45)) // array rows of rectangles (y-axis)
+                    //vH / 45 is the size of a square
+                    .attr("x", (d, i) => vH / 45 * (i % 45)) //arrays columns of rectangles (x-axis)
+                    .attr("y", (d, i) => vH / 45 * Math.floor(i / 45)) // array rows of rectangles (y-axis)
+                    .attr("height", vH / 45) // assigns height of rectangles to predefined height
+                    .attr("width", vH / 45) // assigns width of rectangles to predefined width
                     .attr("stroke", "#06112b") //creates a stroke around the rectangle
                     //color based on speed
                     .attr("fill", function(d) {
