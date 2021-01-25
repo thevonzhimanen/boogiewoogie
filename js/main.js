@@ -37,13 +37,19 @@ locRef.once("value", function fetcharchive(snapshot){
             //use dataOn[key].data to get the base64 version of each svg;
             var parser = new DOMParser();
             var doc = parser.parseFromString(dataOn[key].data, "text/xml");
-            
+            //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
             var svgElement = document.createElement("svg");
             svgElement.id = key;
             svgElement.className = "archive";
             svgElement.innerHTML = dataOn[key].data;
 
+            var titleElement = document.createElement("p");
+            var archiveTitle = document.createTextNode(key.substr(4, 22)+":");
+            titleElement.appendChild(archiveTitle);
+            
+            document.getElementById("archive").appendChild(titleElement);
             document.getElementById("archive").appendChild(svgElement);
+            //consider using createDocumentFragment() method?
         
         });
     });
@@ -187,8 +193,8 @@ function fetchdata() {
     
     function writedata (){
         var t = new Date();
-        var timeid = t.getTime();
-        var filename = "svg-"+timeid;
+        var timeid = t.toISOString().replace(/:/g, "-").replace(".", "-");
+        var filename = "img-"+timeid;
         //how to take the svg/xml structure and simply write it to firebase?
         var svg = document.getElementById("chartArea").getElementsByTagName("svg").item(0);
         var data = (new XMLSerializer()).serializeToString(svg);
