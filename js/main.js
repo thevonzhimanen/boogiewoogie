@@ -53,7 +53,7 @@ function fetchdata() {
 
     $.ajax({
         url : encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
-        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
+
         type: "GET",
         data: {
             "$limit": 1024,
@@ -61,17 +61,15 @@ function fetchdata() {
         },
         beforeSend: function() {
             // Show image container
-            // $("#loaderGif").css("display:block !important");
+
             $("#loaderGif").show();
         },
         //automated requests every half hour
-
-        
-
         complete: function(data) {
             setTimeout(fetchdata, 1800000);
+
+            //Hide loading gif after data is received. Need to update gif
             $("#loaderGif").hide();
-            // setTimeout(fetchdata, 15000);
         }
 
     }).done(function(data) {
@@ -136,22 +134,20 @@ function fetchdata() {
                     .attr('class', 'd3-tip')
                     .html(d => d)
                     .html(d => {
-                        let text = "<span>Borough: </span>" + d['borough'] + '<br>'
-                        text += "<span>Location: </span>" + d['link_name'] + '<br>'
-                        text += "<span>Speed: </span>" + d['speed']  + '<br>'
-                        text += "<span>Timestamp: </span>" + d['data_as_of']
+                        // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
+                        // text += "<span>Location: </span>" + d['link_name'] + '<br>'
+                        text = "<span>Speed: </span>" + d['speed']  + "<span> mph</span>" 
+                        // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
 
                 //create grid
-                rects = svg.selectAll("rect")
+                rects = svg.selectAll("rect.streets")
                     .data(data)
                     .enter()
                     .append("rect")
-                    // .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-                    // .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                    //vH / 32 is the size of a square
+                    .attr("class","streets")
                     .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
                     .attr("height", vH / 32) // assigns height of rectangles to predefined height
@@ -175,9 +171,53 @@ function fetchdata() {
                     })
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
+
+                    data2 = [{
+                        "x": 1,
+                        "y": 1
+                      }, {
+                        "x": 2,
+                        "y": 2
+                      }, {
+                        "x": 3,
+                        "y": 3
+                      }
+                    ]
+                    
+                // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
+                rects = svg.selectAll("rect.buildings")
+                    .data(data2)
+                    .enter().append("rect")
+                    .attr("class", "buildings")
+                    .attr("x", function (d) {
+                        return d.x / 32 * vH;
+                    })
+                    .attr("y", function (d) {
+                        return d.y / 32 * vH;
+                    })
+                    .attr("height", vH / 32) // assigns height to predefined height
+                    .attr("width", vH / 32) // assigns width to predefined width
+                    .attr("stroke", "#06112b") //creates a stroke around the rectangle
+                    .attr("fill", "orange")
+                // .attr("fill-opacity","0.6")
+
                                 
             }        
     },
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     // cache data from api:
 
