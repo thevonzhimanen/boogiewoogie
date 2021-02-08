@@ -137,6 +137,7 @@ function fetchdata() {
                         // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                         // text += "<span>Location: </span>" + d['link_name'] + '<br>'
                         text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
+                        // , text += "x= "+d.x+" y= "+d.y
                         // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
@@ -172,68 +173,10 @@ function fetchdata() {
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
 
-                // data2 = [{
-                //     "x": 2,
-                //     "y": 2
-                // }, {
-                //     "x": 2,
-                //     "y": 3
-                // }, {
-                //     "x": 2,
-                //     "y": 4
-                // }, {
-                //     "x": 2,
-                //     "y": 7
-                // }, {
-                //     "x": 2,
-                //     "y": 8
-                // }, {
-                //     "x": 2,
-                //     "y": 9
-
-                // }, {
-                //     "x": 2,
-                //     "y": 12
-                // }, {
-                //     "x": 2,
-                //     "y": 13
-                // }, {
-                //     "x": 2,
-                //     "y": 14
-                // }, {
-                //     "x": 2,
-                //     "y": 17
-                // }, {
-                //     "x": 2,
-                //     "y": 18
-                // }, {
-                //     "x": 2,
-                //     "y": 19
-                // }, {
-                //     "x": 2,
-                //     "y": 22
-                // }, {
-                //     "x": 2,
-                //     "y": 23
-                // }, {
-                //     "x": 2,
-                //     "y": 24
-                // }, {
-                //     "x": 2,
-                //     "y": 27
-                // }, {
-                //     "x": 2,
-                //     "y": 28
-                // }, {
-                //     "x": 2,
-                //     "y": 29
-                // }]
-
-
                 // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
                 // console.log(json)
                 // data3 = json
-                d3.csv("json/building1.csv", function (data) {
+                d3.csv("data/buildingBlock.csv", function (data) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
 
                     data.x = parseInt(data.x);
@@ -254,6 +197,8 @@ function fetchdata() {
                         .attr("width", vH / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
+                        // .on('mouseover', tip.show)
+                        // .on('mouseout', tip.hide)
                     // .attr("fill-opacity","0.6")
 
                 });
