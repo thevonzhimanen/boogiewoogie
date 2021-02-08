@@ -9,15 +9,15 @@ var firebaseConfig = {
     storageBucket: "nyc-boogie-woogie.appspot.com",
     messagingSenderId: "973992429447",
     appId: "1:973992429447:web:e4cb07cebb830676d43522"
-  };
+};
 firebase.initializeApp(firebaseConfig);
 
 window.db = firebase.database();
 window.locRef = db.ref("images");
 
 //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
-locRef.once("value", function fetcharchive(snapshot){
-    
+locRef.once("value", function fetcharchive(snapshot) {
+
     /*
     //user authentication for security:
     var userId = firebase.auth().currentUser.uid;
@@ -26,59 +26,53 @@ locRef.once("value", function fetcharchive(snapshot){
     // ...
     });
     */
-    
-        var dataOn = snapshot.val()
-        
-        //document.getElementById("chartArea").innerHTML=dataOn;
-            
-        //to populate the archive images, iterate over each past data entry
-        Object.keys(dataOn).forEach(function(key) {
-            console.log("Firebase snapshot: ", key, dataOn[key]);
-            //use dataOn[key].data to get the base64 version of each svg;
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(dataOn[key].data, "text/xml");
-            //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
-            var svgElement = document.createElement("svg");
-            svgElement.id = key;
-            svgElement.className = "archive";
-            svgElement.innerHTML = dataOn[key].data;
 
-            var titleElement = document.createElement("p");
-            var archiveTitle = document.createTextNode(key.substr(4, 22)+":");
-            titleElement.appendChild(archiveTitle);
-            
-            document.getElementById("archive").appendChild(titleElement);
-            document.getElementById("archive").appendChild(svgElement);
-            //consider using createDocumentFragment() method?
-        
-        });
+    var dataOn = snapshot.val()
+
+    //document.getElementById("chartArea").innerHTML=dataOn;
+
+    //to populate the archive images, iterate over each past data entry
+    Object.keys(dataOn).forEach(function (key) {
+        console.log("Firebase snapshot: ", key, dataOn[key]);
+        //use dataOn[key].data to get the base64 version of each svg;
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(dataOn[key].data, "text/xml");
+
+        var svgElement = document.createElement("svg");
+        svgElement.id = key;
+        svgElement.className = "archive";
+        svgElement.innerHTML = dataOn[key].data;
+
+        document.getElementById("archive").appendChild(svgElement);
+
     });
-                       
+});
+
 //request data from API    
 function fetchdata() {
 
     $.ajax({
-        url : encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
+        url: encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
 
         type: "GET",
         data: {
             "$limit": 1024,
             "$$app_token": "ReXNLc0gRAMKhmOChFYGqCdlk"
         },
-        beforeSend: function() {
+        beforeSend: function () {
             // Show image container
 
             $("#loaderGif").show();
         },
         //automated requests every half hour
-        complete: function(data) {
+        complete: function (data) {
             setTimeout(fetchdata, 1800000);
 
             //Hide loading gif after data is received. Need to update gif
             $("#loaderGif").hide();
         }
 
-    }).done(function(data) {
+    }).done(function (data) {
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
 
@@ -88,7 +82,7 @@ function fetchdata() {
             $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
 
             //d3 ____________________________________________________________________
-           
+
 
             //clear canvas for new data load...
             d3.select('#chartArea').selectAll('*').remove();
@@ -114,7 +108,7 @@ function fetchdata() {
             rectWidth = vH / 32;
 
             //detect if window height changes
-            $(window).on('resize', function() {
+            $(window).on('resize', function () {
                 vH_unscaled = $(this).innerHeight();
                 vW_unscaled = $(this).innerWidth();
                 vH = .70 * vH_unscaled
@@ -142,7 +136,7 @@ function fetchdata() {
                     .html(d => {
                         // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                         // text += "<span>Location: </span>" + d['link_name'] + '<br>'
-                        text = "<span>Speed: </span>" + d['speed']  + "<span> mph</span>" 
+                        text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
                         // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
@@ -153,14 +147,14 @@ function fetchdata() {
                     .data(data)
                     .enter()
                     .append("rect")
-                    .attr("class","streets")
+                    .attr("class", "streets")
                     .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
                     .attr("height", vH / 32) // assigns height of rectangles to predefined height
                     .attr("width", vH / 32) // assigns width of rectangles to predefined width
                     .attr("stroke", "#06112b") //creates a stroke around the rectangle
                     //color based on speed
-                    .attr("fill", function(d) {
+                    .attr("fill", function (d) {
                         if (d['speed'] > 20) {
                             // blue
                             // return "#518cd0";
@@ -178,96 +172,150 @@ function fetchdata() {
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
 
-                    data2 = [{
-                        "x": 1,
-                        "y": 1
-                      }, {
-                        "x": 2,
-                        "y": 2
-                      }, {
-                        "x": 3,
-                        "y": 3
-                      }
-                    ]
-                    
-                // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-                rects = svg.selectAll("rect.buildings")
-                    .data(data2)
-                    .enter().append("rect")
-                    .attr("class", "buildings")
-                    .attr("x", function (d) {
-                        return d.x / 32 * vH;
-                    })
-                    .attr("y", function (d) {
-                        return d.y / 32 * vH;
-                    })
-                    .attr("height", vH / 32) // assigns height to predefined height
-                    .attr("width", vH / 32) // assigns width to predefined width
-                    .attr("stroke", "#06112b") //creates a stroke around the rectangle
-                    .attr("fill", "orange")
-                // .attr("fill-opacity","0.6")
+                // data2 = [{
+                //     "x": 2,
+                //     "y": 2
+                // }, {
+                //     "x": 2,
+                //     "y": 3
+                // }, {
+                //     "x": 2,
+                //     "y": 4
+                // }, {
+                //     "x": 2,
+                //     "y": 7
+                // }, {
+                //     "x": 2,
+                //     "y": 8
+                // }, {
+                //     "x": 2,
+                //     "y": 9
 
-                                
-            }        
-    },
-    
+                // }, {
+                //     "x": 2,
+                //     "y": 12
+                // }, {
+                //     "x": 2,
+                //     "y": 13
+                // }, {
+                //     "x": 2,
+                //     "y": 14
+                // }, {
+                //     "x": 2,
+                //     "y": 17
+                // }, {
+                //     "x": 2,
+                //     "y": 18
+                // }, {
+                //     "x": 2,
+                //     "y": 19
+                // }, {
+                //     "x": 2,
+                //     "y": 22
+                // }, {
+                //     "x": 2,
+                //     "y": 23
+                // }, {
+                //     "x": 2,
+                //     "y": 24
+                // }, {
+                //     "x": 2,
+                //     "y": 27
+                // }, {
+                //     "x": 2,
+                //     "y": 28
+                // }, {
+                //     "x": 2,
+                //     "y": 29
+                // }]
 
 
+                // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
+                // console.log(json)
+                // data3 = json
+                d3.csv("json/building1.csv", function (data) {
+                    // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
 
+                    data.x = parseInt(data.x);
+                    data.y = parseInt(data.y);
 
+                    console.log(data)
+                    rects = svg.selectAll("rect.buildings")
+                        .data(data)
+                        .enter().append("rect")
+                        .attr("class", "buildings")
+                        .attr("x", function (d) {
+                            return d.x / 32 * vH;
+                        })
+                        .attr("y", function (d) {
+                            return d.y / 32 * vH;
+                        })
+                        .attr("height", vH / 32) // assigns height to predefined height
+                        .attr("width", vH / 32) // assigns width to predefined width
+                        .attr("stroke", "#06112b")
+                        .attr("fill", "#06112b")
+                    // .attr("fill-opacity","0.6")
 
+                });
 
-
-
-
-
-
-
-
-    
-    // cache data from api:
-
-    //take rects svg and store it as variable; name it 'svg' plus the date for a unique name
-    //save svg to firebase
-    //script for populating the Archive Gallery with all past svgs
-    
-    function writedata (){
-        var t = new Date();
-        var timeid = t.toISOString().replace(/:/g, "-").replace(".", "-");
-        var filename = "img-"+timeid;
-        //how to take the svg/xml structure and simply write it to firebase?
-        var svg = document.getElementById("chartArea").getElementsByTagName("svg").item(0);
-        var data = (new XMLSerializer()).serializeToString(svg);
-        
-        console.log(t, timeid, filename, data);
-        
-        db.ref('images/' + filename).set(
-            {
-            id: filename,
-            data: data
             }
-            );
-        
-        /*
-        //THIS IS FOR FIREBASE STORAGE, NOT REALTIME DATABASE:
-        //create Firebase Storage reference:
-        var storage = firebase.storage();
-        var storageRef = storage.ref();
-        var imagesRef = storageRef.child('images');
+        },
 
-        //create unique file name with timestamp:
-        var t = new Date();
-        var timeid = t.getTime();
-        var filename = "svg-"+"timeid";
-        var svgref = imagesRef.child('filename');
-        console.log(svgref.fullPath)
-        */ 
-        
-    }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // cache data from api:
+
+        //take rects svg and store it as variable; name it 'svg' plus the date for a unique name
+        //save svg to firebase
+        //script for populating the Archive Gallery with all past svgs
+
+        function writedata() {
+            var t = new Date();
+            var timeid = t.getTime();
+            var filename = "svg-" + timeid;
+            //how to take the svg/xml structure and simply write it to firebase?
+            var svg = document.getElementById("chartArea").getElementsByTagName("svg").item(0);
+            var data = (new XMLSerializer()).serializeToString(svg);
+
+            console.log(t, timeid, filename, data);
+
+            db.ref('images/' + filename).set({
+                id: filename,
+                data: data
+            });
+
+            /*
+            //THIS IS FOR FIREBASE STORAGE, NOT REALTIME DATABASE:
+            //create Firebase Storage reference:
+            var storage = firebase.storage();
+            var storageRef = storage.ref();
+            var imagesRef = storageRef.child('images');
+
+            //create unique file name with timestamp:
+            var t = new Date();
+            var timeid = t.getTime();
+            var filename = "svg-"+"timeid";
+            var svgref = imagesRef.child('filename');
+            console.log(svgref.fullPath)
+            */
+
+        }
+
     )
-    
-                                   
+
+
 
 
 };
@@ -293,6 +341,6 @@ setInterval(updateTime, 1000)
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
-$(document).ready(function() {
+$(document).ready(function () {
     setTimeout(fetchdata, 400);
 });
