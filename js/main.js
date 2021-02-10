@@ -38,10 +38,19 @@ locRef.once("value", function fetcharchive(snapshot) {
         var parser = new DOMParser();
         var doc = parser.parseFromString(dataOn[key].data, "text/xml");
 
+        // var css = 'svgElement:hover{ background-color: #00ff00 }';
+
         var svgElement = document.createElement("svg");
+
+        svgElement.setAttribute('viewBox', '0 0 50 100');
+        svgElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        svgElement.setAttribute('width', '10px');
+        svgElement.setAttribute('height', '10px');
+
         svgElement.id = key;
         svgElement.className = "archive";
         svgElement.innerHTML = dataOn[key].data;
+        svgElement
 
         document.getElementById("archive").appendChild(svgElement);
 
