@@ -89,44 +89,44 @@ function fetcharchive(dataOn) {
                 //consider using createDocumentFragment() method?
 
             });
-        }
+        })};
 
 
         //request data from API    
         function fetchdata() {
 
             $.ajax({
-                url: encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
-                // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
+                // url: encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
+                // // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
 
-                var dataOn = snapshot.val()
+                // var dataOn = snapshot.val()
 
-                //document.getElementById("chartArea").innerHTML=dataOn;
+                // //document.getElementById("chartArea").innerHTML=dataOn;
 
-                //to populate the archive images, iterate over each past data entry
-                Object.keys(dataOn).forEach(function (key) {
-                    console.log("Firebase snapshot: ", key, dataOn[key]);
-                    //use dataOn[key].data to get the base64 version of each svg;
-                    var parser = new DOMParser();
-                    var doc = parser.parseFromString(dataOn[key].data, "text/xml");
+                // //to populate the archive images, iterate over each past data entry
+                // Object.keys(dataOn).forEach(function (key) {
+                //     console.log("Firebase snapshot: ", key, dataOn[key]);
+                //     //use dataOn[key].data to get the base64 version of each svg;
+                //     var parser = new DOMParser();
+                //     var doc = parser.parseFromString(dataOn[key].data, "text/xml");
 
-                    // var css = 'svgElement:hover{ background-color: #00ff00 }';
+                //     // var css = 'svgElement:hover{ background-color: #00ff00 }';
 
-                    var svgElement = document.createElement("svg");
+                //     var svgElement = document.createElement("svg");
 
-                    svgElement.setAttribute('viewBox', '0 0 50 100');
-                    svgElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-                    svgElement.setAttribute('width', '10px');
-                    svgElement.setAttribute('height', '10px');
+                //     svgElement.setAttribute('viewBox', '0 0 50 100');
+                //     svgElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+                //     svgElement.setAttribute('width', '10px');
+                //     svgElement.setAttribute('height', '10px');
 
-                    svgElement.id = key;
-                    svgElement.className = "archive";
-                    svgElement.innerHTML = dataOn[key].data;
-                    svgElement
+                //     svgElement.id = key;
+                //     svgElement.className = "archive";
+                //     svgElement.innerHTML = dataOn[key].data;
+                //     svgElement
 
-                    document.getElementById("archive").appendChild(svgElement);
+                //     document.getElementById("archive").appendChild(svgElement);
 
-                });
+                // });
             });
 
             //request data from API    

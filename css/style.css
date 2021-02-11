@@ -76,8 +76,8 @@ body {
       margin: auto;
 }
 
-.archive{
-}
+/* .archive{
+} */
 
 #description {
     grid-column: 3;
@@ -119,16 +119,12 @@ body {
 }
 
 #moderate {
-    /* color: #06112b;
-    background-color: #eceb66; */
     color: #eceb66;
     margin: auto 50px;
     padding: auto 20px;
 }
 
 #fast {
-    /* color: #06112b;
-    background-color: #518cd0; */
     color: #518cd0;
     margin: auto 50px;
     padding: auto 150px;
@@ -142,10 +138,6 @@ body {
     /* align-items: center; */
 }
 
-
-/* .row {
-    height: 100vh;
-} */
 
 /* https://stackoverflow.com/questions/24162194/custom-scrollbar-styling-artifact */
 /* http://jsfiddle.net/hmartiro/Xck2A/1/ */
@@ -195,10 +187,6 @@ h1 {
 }
 
 
-/* h2{
-    color:#4cbb9a;
-} */
-
 h2 {
     color: #eceb66;
 }
@@ -207,35 +195,13 @@ p {
     color: #518cd0;
 }
 
-
-/* 
-yellow */
-
-
-/* ffd861 */
-
-
-/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_glowing_text */
-
-
-/* .glow {
-    color: #fff;
-    text-align: center;
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
-  }
-  
-  @-webkit-keyframes glow {
-    from {
-      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-    }
-    
-    to {
-      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-  } */
-
 .d3-tip {
     z-index: 9;
 }
+
+@media screen and (max-width: 450px) {
+    body {
+      background-color: lightgreen;
+    }
+    
+  }
