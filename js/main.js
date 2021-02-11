@@ -1,5 +1,14 @@
 console.log('js Loaded 3');
 
+/*
+ORDER OF OPERATIONS:
+    go to database/archive
+    get first item and place it in the canvas
+    get remainder of items and place them in the archive
+    if current time is less than 30 minutes since timestamp of last item in archive, then do nothing
+    if current time is more than 30 minutes since timestamp of last item in archive, then fetch data etc.
+*/
+
 //Initialize Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyBdBvm5AKa6fI004M_9jf2n5nyVAHvVdZQ",
@@ -11,12 +20,19 @@ var firebaseConfig = {
     appId: "1:973992429447:web:e4cb07cebb830676d43522"
 };
 firebase.initializeApp(firebaseConfig);
-
-window.db = firebase.database();
-window.locRef = db.ref("images");
+var db = firebase.database();
+var locRef = db.ref("images");
 
 //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
+
+
+function fetcharchive(dataOn){
+
+    //Normally, we would fire the ".on" method for the firebase data, but we already have that data stored in the dataOnce variable.
+    
+
 locRef.once("value", function fetcharchive(snapshot) {
+
 
     /*
     //user authentication for security:
@@ -26,6 +42,63 @@ locRef.once("value", function fetcharchive(snapshot) {
     // ...
     });
     */
+
+
+
+        //checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
+        
+        var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length-1].substr(4));
+        var timeNow = new Date().getTime();
+        var timeDiff = Math.abs(timeNow - timeLast);
+        if (timeDiff<1800000){
+            //time difference is less than 30 min, do nothing
+            console.log(timeDiff + "milliseconds / " + timeDiff/60000 + "mins since last request");
+        }
+        else {
+            //time difference is greater than 30 min, run fetchdata function
+            console.log(timeDiff + "milliseconds / " + timeDiff/60000 + "mins since last request");
+            fetchdata();  
+        }
+        
+        //to populate the archive images, iterate over each past data entry
+        var parser = new DOMParser();
+        Object.keys(dataOn).forEach(function(key) {
+            console.log("Firebase snapshot: ", key, dataOn[key]);
+
+            //use dataOn[key].dataSVG to get the base64 version of each svg;    
+            var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
+            //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
+            var svgElement = doc.firstChild;
+            svgElement.setAttribute("width", "100%");
+            svgElement.setAttribute("height", "auto");
+            //svgElement.setAttribute("viewBox", "0 0 1 1");
+            
+            //archiveElement contains both the svg and its title text:
+            var archiveElement = document.createElement("div");
+            archiveElement.id = dataOn[key].time;
+            archiveElement.className = "archive"; 
+
+            //titleElement contains the title text of the svg:
+            var titleElement = document.createElement("p");
+            var archiveTitle = document.createTextNode(dataOn[key].time+":");
+            titleElement.appendChild(archiveTitle);
+            
+            //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
+            archiveElement.appendChild(titleElement);
+            archiveElement.appendChild(svgElement);
+            document.getElementById("archive").appendChild(archiveElement);
+            //consider using createDocumentFragment() method?
+        
+        });
+    }
+
+          
+//request data from API    
+function fetchdata() {
+    
+    $.ajax({       
+        url : encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
+        // url: "https://data.cityofnewyork.us/resource/i4gi-tjb9.json?",
 
     var dataOn = snapshot.val()
 
@@ -63,6 +136,7 @@ function fetchdata() {
     $.ajax({
         url: encodeURI("https://data.cityofnewyork.us/resource/i4gi-tjb9.json?$order=data_as_of DESC&borough=Manhattan"),
 
+
         type: "GET",
         data: {
             "$limit": 1024,
@@ -72,16 +146,30 @@ function fetchdata() {
             // Show image container. Update Gif
 
             $("#loaderGif").show();
+        
         },
+
+        
+        //automated requests every half hour
+        complete: function(data) {
+
         //automated requests every half hour
         complete: function (data) {
+
             setTimeout(fetchdata, 1800000);
 
             //Hide loading gif after data is received. Need to update gif
             $("#loaderGif").hide();
+
+            document.getElementById("mondrian").style.display="none";
+        }
+
+    }).done(function (data){
+
         }
 
     }).done(function (data) {
+
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
 
@@ -95,7 +183,7 @@ function fetchdata() {
 
             //clear canvas for new data load...
             d3.select('#chartArea').selectAll('*').remove();
-            d3.select('svg').selectAll('*').remove();
+            //d3.select('svg').selectAll('*').remove();
 
             //create Boogie Woogie canvas
             const svg = d3.select("#chartArea").append("svg")
@@ -104,6 +192,7 @@ function fetchdata() {
                 .attr("height", "70vh")
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
+                //.attr("viewBox", "0, 0, auto, auto");
 
             //
             vH_unscaled = $(window).innerHeight();
@@ -131,11 +220,11 @@ function fetchdata() {
                 svg.selectAll("*").remove();
                 vH = viewportHeight;
                 vW = viewportWidth;
-
-                rectHeight = vH / 32;
-                rectWidth = rectHeight;
+                rectSize = Math.min(vH, vW) / 32;
+                //rectHeight = vH / 32;
+                //rectWidth = rectHeight;
                 //change rectangle size based on new canvas size
-                console.log("rectHeight is now" + rectHeight);
+                console.log("rectSize is now" + rectSize);
                 console.log("vHeight is now" + vH);
 
                 //tooltip
@@ -157,11 +246,21 @@ function fetchdata() {
                     .data(data)
                     .enter()
                     .append("rect")
+
+                    // .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
+                    // .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
+                    //vH / 32 is the size of a square
+                    .attr("x", (d, i) => rectSize * (i % 32)) //arrays columns of rectangles (x-axis)
+                    .attr("y", (d, i) => rectSize * Math.floor(i / 32)) // array rows of rectangles (y-axis)
+                    .attr("height", rectSize) // assigns height of rectangles to predefined rectSize
+                    .attr("width", rectSize) // assigns width of rectangles to predefined width
+
                     .attr("class", "streets")
                     .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
                     .attr("height", vH / 32) // assigns height of rectangles to predefined height
                     .attr("width", vH / 32) // assigns width of rectangles to predefined width
+
                     .attr("stroke", "#06112b") //creates a stroke around the rectangle
                     //color based on speed
                     .attr("fill", function (d) {
@@ -179,6 +278,38 @@ function fetchdata() {
                     })
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
+
+                                
+            }        
+    },
+    
+    function writedata (data){
+        var t = new Date();
+        var timeid = t.getTime();
+        var timeStamp = t.toISOString().replace(/:/g, "-").replace(".", "-");
+        var filename = "img-"+timeid;
+        //how to take the svg/xml structure and simply write it to firebase?
+        var dataSVG = (new XMLSerializer()).serializeToString(document.getElementById("chartArea").getElementsByTagName("svg").item(0));
+        
+        console.log(timeid, timeStamp, filename, data);
+        
+        db.ref('images/' + filename).set(
+            {
+            id: filename,
+            dataSVG: dataSVG,
+            dataJSON: data,
+            time: timeStamp
+            }
+            );
+        
+    }
+    
+    );
+
+    
+    
+                                   
+
 
                 // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
                 // console.log(json)
@@ -270,7 +401,11 @@ function fetchdata() {
 
 
 
-};
+}
+
+
+                       
+
 
 function updateTime() {
     var d = new Date();
@@ -293,6 +428,44 @@ setInterval(updateTime, 1000)
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
+
+
+$(document).ready(function() {
+    
+    //".once" method fires once at the beginning
+    locRef.once("value", function (snapshot){
+    /*
+    //user authentication for security:
+    var userId = firebase.auth().currentUser.uid;
+    return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
+        var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    // ...
+    });
+    */
+   
+        var dataOnce = snapshot.val();
+        
+        //the JSONData variable is the JSON format of the last request. Can use that to draw a canvas while you wait for the next request to come in.
+        var JSONData = Object.values(dataOnce)[Object.keys(dataOnce).length - 1].dataJSON;
+        
+        /*
+        var parser = new DOMParser();
+        var svgData = parser.parseFromString(Object.values(dataOnce)[Object.keys(dataOnce).length - 1].data, "text/xml");
+        console.log(svgData);
+        //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
+        var lastRequest = svgData.firstChild;
+        lastRequest.setAttribute("width", "100%");
+        lastRequest.setAttribute("height", "auto");
+        //svgElement.setAttribute("viewBox", "0 0 1 1");
+        document.getElementById("chartArea").appendChild(lastRequest);
+        console.log(lastRequest);
+        */
+        
+        fetcharchive(dataOnce);
+    });
+});
+
 $(document).ready(function () {
     setTimeout(fetchdata, 400);
 });
+
