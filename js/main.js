@@ -144,7 +144,7 @@ function fetcharchive(dataOn) {
                     beforeSend: function () {
                         // Show image container. Update Gif
 
-                        // $("#loaderGif").show();
+                        $("#loaderGif").show();
 
                     },
 
