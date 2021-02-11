@@ -69,7 +69,7 @@ function fetchdata() {
             "$$app_token": "ReXNLc0gRAMKhmOChFYGqCdlk"
         },
         beforeSend: function () {
-            // Show image container
+            // Show image container. Update Gif
 
             $("#loaderGif").show();
         },
@@ -167,8 +167,6 @@ function fetchdata() {
                     .attr("fill", function (d) {
                         if (d['speed'] > 20) {
                             // blue
-                            // return "#518cd0";
-                            // return "#04bcbe";
                             return "#518cd0";
                         } else if (d['speed'] > 10) {
                             // yellow
