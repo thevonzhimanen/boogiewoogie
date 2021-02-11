@@ -71,6 +71,9 @@ body {
     height: 70vh;
 } 
 
+.archive{
+}
+
 #description {
     grid-column: 3;
     grid-row: 2/ span 1;
