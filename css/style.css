@@ -16,13 +16,16 @@ body {
 }
 
 
-#chartArea {
+#chartArea, mondrian {
+    height: inherit;
+    width: 100%;
+    /* background-color: yellow; */
+}
+
+#canvas {
     grid-column: 2;
     grid-row: 2 / span 1;
     margin: 5px auto 2px auto;
-    height: 70vh;
-    /* position: relative; */
-    /* background-color: yellow; */
 }
 
 #subText {
@@ -61,16 +64,11 @@ body {
     background-color: #142650;
     margin: 20px 20px auto 20px;
     overflow: auto;
-    align: center;
+    align-content: center;
     color: #ff6661;
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
     height: 70vh;
-}
-
-.archive{
-    width: 70%;
-    height:100%;
 } 
 
 #description {
@@ -84,8 +82,6 @@ body {
     height: 70vh;
     overflow: auto;
 }
-
-
 
 .legInline {
     display: inline;
@@ -232,6 +228,6 @@ yellow */
     }
   } */
 
-body {
-    background-color: #06112b !important;
+.d3-tip {
+    z-index: 9;
 }

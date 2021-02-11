@@ -42,9 +42,11 @@
             <h1 id="mainHeader" class="text glow">Broadway Data Boogie Woogie</h1>
             <h2 class="text glow">Near Real-Time Traffic Speeds</h2>
         </div>
-
- 
+            
+        <div id="canvas">
         <div id="chartArea"></div>
+        <div id="mondrian"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg/800px-Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg"></div>
+        </div>
 
         <div id="subText">
             <p id="date" class="text glow subText"> "Date: " </p>
@@ -54,9 +56,9 @@
 
         <!-- Need to update this gif placeholder -->
         <iframe src="https://giphy.com/embed/ToMjGpogGCQfPsiTUB2" width="480" height="360" frameBorder="0" id='loaderGif' class="giphy-embed" allowFullScreen style="display:block;"></iframe>
-
-           <!-- <img src ="/gifs/loading.gif" width="480" height="360" id ="loaderGif" class="giphy-embed"    allowFullScreen style="display:block;"></img> -->
-
+        
+        
+        
 
         <div id="legendWrapper">
             <!-- <div id="legend" class="legend text">LEGEND</div> -->
@@ -71,12 +73,16 @@
 
         <div id="description" class= "scrollable-element">
             <p class="descriptionText"> <span class="redText">ABOUT:</span>
-                We have reimagined Piet Mondrian’s Broadway Boogie Woogie as a traffic data visualization, reinvigorating the century-old abstract art tradition for a 21st century context. <br> The NYC Open Data web platform hosts many datasets related to mobility, the most intriguing of which is the DOT’s real-time traffic speed dataset. We humbly recognize that the DOT has already created a much more useful visualization of traffic speeds which can be found at the following location: <a href='https://webcams.nyctmc.org/'>NYC TMC</a>. We’ve given ourselves a much simpler goal under the protections of artist expression to create a dynamic, two-dimensional update to Broadway Boogie Woogie. This dataset is updated every half hour, so the image will change in kind. 
-            <br><br> <span class="redText">DATA SOURCE: </span><a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal API</a>  </p>
+                We have reimagined Piet Mondrian’s Broadway Boogie Woogie as a traffic data visualization, reinvigorating the century-old abstract art tradition for a 21st century context. <br> The NYC Open Data web platform hosts many datasets related to mobility, the most intriguing of which is the DOT’s real-time traffic speed dataset. We humbly recognize that the DOT has already created a much more useful visualization of traffic speeds which can be found at the following location: <a href='https://webcams.nyctmc.org/'>NYC TMC</a>. We’ve given ourselves a much simpler goal under the protections of artist expression to create a dynamic, two-dimensional update to Broadway Boogie Woogie. This dataset is updated every half hour, so the image will change in kind.
+                <br><br>
+                <span class="redText">DATA SOURCE: </span><a href="https://data.cityofnewyork.us/Transportation/Real-Time-Traffic-Speed-Data/qkm5-nuaq">NYC Open Data Portal API</a>
+                <br><br>
+                <span class="redText">IMAGE SOURCE: </span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg/1200px-Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg" width="100%">
+            </p>
         </div>
     </div>
     <div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg/1200px-Piet_Mondrian%2C_1942_-_Broadway_Boogie_Woogie.jpg" width="100%">
+        
     </div>
 
     <!-- External JS libraries -->
