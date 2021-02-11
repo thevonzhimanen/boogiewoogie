@@ -1,4 +1,4 @@
-console.log('js Loaded');
+console.log('js Loaded 2');
 
 //Initialize Firebase
 var firebaseConfig = {
