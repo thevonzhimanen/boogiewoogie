@@ -61,7 +61,7 @@ function fetcharchive(dataOn){
             console.log(timeDiff, "... time is more");
             //time difference is greater than 30 min, run fetchdata function
         }
-                */
+*/
         
         //to populate the archive images, iterate over each past data entry
         Object.keys(dataOn).forEach(function(key) {
