@@ -73,6 +73,21 @@ p {
     height: 50vh;
 }
 
+#chartArea {
+    max-height: 70vh;
+    max-height:  45vw;
+    margin: auto;
+}
+
+#mondrian {
+    grid-column: 2;
+    grid-row: 2 / span 1;
+    /* width: 100%; */
+    max-height: 70vh;
+    max-height:  45vw;
+    margin: auto;
+}
+
 
 /* TABLET? + DESKTOP */
 @media screen and (min-width: 450px) {
@@ -95,31 +110,8 @@ p {
         text-align: center;
     }
 
-
-    #chartArea,
-    mondrian {
-        height: inherit;
-        width: 100%;
-        /* background-color: yellow; */
-    }
-
-    #mondrian {
-        width: 50vw;
-    }
-
-    #canvas {
-        grid-column: 2;
-        grid-row: 2 / span 1;
-        margin: 5px auto 2px auto;
-    }
-
-    #subText {
-        grid-column: 2;
-        grid-row: 4/ span 1;
-        text-align: center;
-    }
-
     #loaderGif {
+        /* display: none; */
         grid-column: 2;
         grid-row: 2 / span 1;
     }
@@ -129,6 +121,13 @@ p {
         grid-row: 3/ span 1;
         text-align: center;
     }
+
+    #subText {
+        grid-column: 2;
+        grid-row: 4/ span 1;
+        text-align: center;
+    }
+
 
     #clock {
         grid-column-start: 2;
@@ -158,9 +157,9 @@ p {
         height: 70vh;
     }
 
-    #archive:hover {
+    /* #archive:hover {
         margin: auto;
-    }
+    } */
 
     #description {
         grid-column: 3;
@@ -168,7 +167,7 @@ p {
         background-color: #142650;
         color: #ff6661;
         margin: 20px 40px 10px 10px;
-        align: center;
+        /* align: center; */
         font-family: 'Montserrat', sans-serif;
         height: 70vh;
         overflow: auto;
