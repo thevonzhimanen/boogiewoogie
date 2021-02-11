@@ -38,38 +38,29 @@ function fetcharchive(dataOn){
     });
     */
 
-/*
+
         //checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
-        var timeLastString = Object.keys(dataOn)[Object.keys(dataOn).length - 1].substr(4, Object.keys(dataOn).length);
-        var year = timeLastString.split(/-|T|Z/)[0],
-            month = timeLastString.split(/-|T|Z/)[1]-1,
-            day = timeLastString.split(/-|T|Z/)[2],
-            hour = timeLastString.split(/-|T|Z/)[3],
-            minute = timeLastString.split(/-|T|Z/)[4],
-            second = timeLastString.split(/-|T|Z/)[5],
-            millisecond = timeLastString.split(/-|T|Z/)[6];
-        console.log(year, month, day, hour, minute, second);
-        var timeLast = Date.parse(year, month, day, hour, minute, second, millisecond);
-        var timeNow = new Date();
-        console.log(timeNow, timeLast, timeLastString);
-        var timeDiff = Math.abs(timeNow.getTime() - timeLast.getTime());
+        
+        var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length-1].substr(4));
+        var timeNow = new Date().getTime();
+        var timeDiff = Math.abs(timeNow - timeLast);
         if (timeDiff<1800000){
             //time difference is less than 30 min, do nothing
-            console.log(timeLast, timeDiff, "... time is less");
+            console.log(timeDiff + "milliseconds / " + timeDiff/60000 + "mins since last request");
         }
         else {
-            console.log(timeDiff, "... time is more");
             //time difference is greater than 30 min, run fetchdata function
+            console.log(timeDiff + "milliseconds / " + timeDiff/60000 + "mins since last request");
+            fetchdata();  
         }
-*/
         
         //to populate the archive images, iterate over each past data entry
+        var parser = new DOMParser();
         Object.keys(dataOn).forEach(function(key) {
             console.log("Firebase snapshot: ", key, dataOn[key]);
 
-            //use dataOn[key].data to get the base64 version of each svg;
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(dataOn[key].data, "text/xml");
+            //use dataOn[key].dataSVG to get the base64 version of each svg;    
+            var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
             //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
             var svgElement = doc.firstChild;
             svgElement.setAttribute("width", "100%");
@@ -78,12 +69,12 @@ function fetcharchive(dataOn){
             
             //archiveElement contains both the svg and its title text:
             var archiveElement = document.createElement("div");
-            archiveElement.id = key;
+            archiveElement.id = dataOn[key].time;
             archiveElement.className = "archive"; 
 
             //titleElement contains the title text of the svg:
             var titleElement = document.createElement("p");
-            var archiveTitle = document.createTextNode(key.substr(4, 22)+":");
+            var archiveTitle = document.createTextNode(dataOn[key].time+":");
             titleElement.appendChild(archiveTitle);
             
             //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
@@ -121,7 +112,7 @@ function fetchdata() {
             document.getElementById("mondrian").style.display="none";
         }
 
-    }).done(function(data) {
+    }).done(function (data){
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
 
@@ -227,27 +218,28 @@ function fetchdata() {
             }        
     },
     
-    function writedata (){
+    function writedata (data){
         var t = new Date();
-        var timeid = t.toISOString().replace(/:/g, "-").replace(".", "-");
+        var timeid = t.getTime();
+        var timeStamp = t.toISOString().replace(/:/g, "-").replace(".", "-");
         var filename = "img-"+timeid;
         //how to take the svg/xml structure and simply write it to firebase?
-        var svg = document.getElementById("chartArea").getElementsByTagName("svg").item(0);
-        var data = (new XMLSerializer()).serializeToString(svg);
+        var dataSVG = (new XMLSerializer()).serializeToString(document.getElementById("chartArea").getElementsByTagName("svg").item(0));
         
-        console.log(t, timeid, filename, data);
+        console.log(timeid, timeStamp, filename, data);
         
         db.ref('images/' + filename).set(
             {
             id: filename,
-            data: data,
-            timestamp: t
+            dataSVG: dataSVG,
+            dataJSON: data,
+            time: timeStamp
             }
             );
         
     }
     
-    )
+    );
 
     
     
@@ -297,8 +289,13 @@ $(document).ready(function() {
    
         var dataOnce = snapshot.val();
         
+        //the JSONData variable is the JSON format of the last request. Can use that to draw a canvas while you wait for the next request to come in.
+        var JSONData = Object.values(dataOnce)[Object.keys(dataOnce).length - 1].dataJSON;
+        
+        /*
         var parser = new DOMParser();
         var svgData = parser.parseFromString(Object.values(dataOnce)[Object.keys(dataOnce).length - 1].data, "text/xml");
+        console.log(svgData);
         //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
         var lastRequest = svgData.firstChild;
         lastRequest.setAttribute("width", "100%");
@@ -306,8 +303,8 @@ $(document).ready(function() {
         //svgElement.setAttribute("viewBox", "0 0 1 1");
         document.getElementById("chartArea").appendChild(lastRequest);
         console.log(lastRequest);
-
-        setTimeout(fetchdata, 1000);
+        */
+        
         fetcharchive(dataOnce);
-});
+    });
 });
