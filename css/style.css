@@ -6,7 +6,7 @@ body {
 
 h1 {
     color: #ff6661;
-        padding: 10px;
+    padding: 10px;
 }
 
 
@@ -82,7 +82,7 @@ p {
 
 #chartArea {
     max-height: 70vh;
-    max-height:  45vw;
+    max-height: 45vw;
     margin: auto;
     text-align: center;
     /* display: block; */
@@ -90,7 +90,7 @@ p {
 
 #mondrian {
     max-height: 70vh;
-    max-height:  45vw;
+    max-height: 45vw;
     margin: 10px auto 20px auto;
     text-align: center;
     /* display: none; */
@@ -124,6 +124,24 @@ p {
         grid-column: 2;
         grid-row: 2 / span 1;
     }
+
+
+    #canvas {
+        max-height: 70vh;
+        max-height: 45vw;
+        grid-column: 2;
+        grid-row: 2 / span 1;
+        margin: 5px auto 2px auto;
+    }
+
+    #mondrian {
+        max-height: 70vh;
+        max-height: 45vw;
+        grid-column: 2;
+        grid-row: 2 / span 1;
+        margin: 5px auto 2px auto;
+    }
+
 
     #legendWrapper {
         grid-column: 2;
