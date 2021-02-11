@@ -1,0 +1,372 @@
+body {
+    background-color: lightgreen;
+}
+
+
+/* 
+.grid-container {
+    display: grid;
+    grid-template-columns: 100vw;
+    grid-template-rows: repeat(7, auto);
+    width: 100vw;
+}
+
+#titleHead {
+    grid-column: 1;
+    grid-row: 1/ span 1;
+    text-align: center;
+    width: 100vw;
+} */
+
+/* 
+#chartArea,
+mondrian {
+    height: inherit;
+    width: 100%;
+}
+
+#canvas {
+    grid-column: 1;
+    grid-row: 2 / span 1;
+    margin: 5px auto 2px auto;
+    width: 100vw;
+}
+
+
+
+#loaderGif {
+    grid-column: 1;
+    grid-row: 2 / span 1;
+    width: 100vw;
+}
+
+#legendWrapper {
+    grid-column: 1;
+    grid-row: 3/ span 1;
+    width: 100vw;
+}
+
+#subText {
+    grid-column: 1;
+    grid-row: 4/ span 1;
+    width: 100vw;
+}
+
+#clock {
+    grid-column: 1;
+    grid-row: 5/ span 1;
+    color: #142650;
+    width: 100vw;
+}
+
+
+#description {
+    grid-column: 1;
+    grid-row: 6;
+    background-color: #142650;
+    color: #ff6661;
+    margin: auto;
+    width: 100vw;
+}
+
+#archive {
+    grid-column: 1;
+    grid-row: 7;
+    background-color: #142650;
+    margin: auto;
+    /* margin: auto; */
+    overflow: visible;
+    align-content: center;
+    color: #ff6661;
+    width: 100vw;
+} */
+
+
+/* okay */
+
+
+.text {
+    text-align: center;
+}
+
+
+#moderate {
+    color: #eceb66;
+    margin: auto;
+}
+
+#fast {
+    color: #518cd0;
+    margin: auto;
+}
+
+.redText {
+    color: #ff6661
+}
+
+.text {
+    margin: 2px auto;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    word-wrap: break-word;
+}
+
+h1 {
+    color: #ff6661;
+}
+
+
+h2 {
+    color: #eceb66;
+}
+
+p {
+    color: #518cd0;
+}
+
+.d3-tip {
+    z-index: 9;
+}
+
+
+@media screen and (min-width: 480px) {
+    body {
+        background-color: #06112b;
+    }
+    
+    .grid-container {
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+        grid-template-rows: auto auto auto auto auto;
+        width: 100vw;
+    }
+    
+    #titleHead {
+        grid-column: 2;
+        grid-row: 1/ span 1;
+        text-align: center;
+    }
+    
+    #chartArea, mondrian {
+        height: inherit;
+        width: 100%;
+        /* background-color: yellow; */
+    }
+    
+    #chartArea {
+        grid-column: 2;
+        grid-row: 2 / span 1;
+        margin: 5px auto 2px auto;
+        height: 70vh;
+        /* position: relative; */
+        /* background-color: yellow; */
+    }
+    
+    #subText {
+        grid-column: 2;
+        grid-row: 4/ span 1;
+        text-align: center;
+    }
+    
+    #loaderGif{
+        grid-column: 2;
+        grid-row: 2 / span 1;
+    }
+    
+    #legendWrapper {
+        grid-column: 2;
+        grid-row: 3/ span 1;
+        text-align: center;
+    }
+    #clock {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row: 5/ span 1;
+        text-align: center;
+        color: #eceb66;
+        color: #142650;
+        font-family: 'Montserrat', sans-serif;
+        /* background-color: #142650; */
+        /* position: absolute;
+        bottom: 0;
+        right: 0; */
+    }
+    
+    #archive {
+        grid-column: 1;
+        grid-row: 2/ span 1;
+        background-color: #142650;
+        margin: 20px 20px auto 20px;
+        /* margin: auto; */
+        overflow: auto;
+        color: #ff6661;
+        padding: 20px;
+        font-family: 'Montserrat', sans-serif;
+        height: 70vh;
+    }
+    
+    #archive:hover{
+          margin: auto;
+    }
+    
+    
+    #description {
+        grid-column: 3;
+        grid-row: 2/ span 1;
+        background-color: #142650;
+        color: #ff6661;
+        margin: 20px 40px 10px 10px;
+        align: center;
+        font-family: 'Montserrat', sans-serif;
+        height: 70vh;
+        overflow: auto;
+    }
+    
+    
+    
+    .legInline {
+        display: inline;
+    }
+    
+    .descriptionText {
+        padding: 20px;
+    }
+    
+    #legend {
+        color: white;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .legend {
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    #slow {
+        /* color: #06112b;
+        background-color: #ff6661; */
+        color: #ff6661;
+        margin: auto 50px;
+        padding: auto 20px;
+    }
+    
+    #moderate {
+        /* color: #06112b;
+        background-color: #eceb66; */
+        color: #eceb66;
+        margin: auto 50px;
+        padding: auto 20px;
+    }
+    
+    #fast {
+        /* color: #06112b;
+        background-color: #518cd0; */
+        color: #518cd0;
+        margin: auto 50px;
+        padding: auto 150px;
+        width: 200px;
+    }
+    
+    #loaderGif {
+        margin: 0 auto;
+        height: 50vh;
+        /* display: block; */
+        /* align-items: center; */
+    }
+    
+    
+    /* .row {
+        height: 100vh;
+    } */
+    
+    /* https://stackoverflow.com/questions/24162194/custom-scrollbar-styling-artifact */
+    /* http://jsfiddle.net/hmartiro/Xck2A/1/ */
+    .scrollable-element {
+        scrollbar-face-color: #367CD2;
+        scrollbar-shadow-color: #FFFFFF;
+        scrollbar-highlight-color: #FFFFFF;
+        scrollbar-3dlight-color: #FFFFFF;
+        scrollbar-darkshadow-color: #FFFFFF;
+        scrollbar-track-color: #FFFFFF;
+        scrollbar-arrow-color: #FFFFFF;
+      }
+    
+      .scrollable-element::-webkit-scrollbar {
+        width: 13px;
+        height: 13px;
+    }
+     
+    /* Side Track */
+    .scrollable-element::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); 
+        -webkit-border-radius: 12px;
+        border-radius: 12px;
+    }
+     
+    /* Bottom Handle */
+    .scrollable-element::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background: #ff6661;
+        -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.5); 
+    }
+    
+    .redText {
+        color: #ff6661
+    }
+    
+    .text {
+        margin: 2px auto;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+        word-wrap: break-word;
+    }
+    
+    h1 {
+        color: #ff6661;
+    }
+    
+    
+    /* h2{
+        color:#4cbb9a;
+    } */
+    
+    h2 {
+        color: #eceb66;
+    }
+    
+    p {
+        color: #518cd0;
+    }
+    
+    
+    /* 
+    yellow */
+    
+    
+    /* ffd861 */
+    
+    
+    /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_glowing_text */
+    
+    
+    /* .glow {
+        color: #fff;
+        text-align: center;
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        -moz-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+      }
+      
+      @-webkit-keyframes glow {
+        from {
+          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+        }
+        
+        to {
+          text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        }
+      } */
+    
+}
