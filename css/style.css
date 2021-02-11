@@ -103,6 +103,10 @@ p {
         /* background-color: yellow; */
     }
 
+    #mondrian {
+        width: 50vw;
+    }
+
     #canvas {
         grid-column: 2;
         grid-row: 2 / span 1;
