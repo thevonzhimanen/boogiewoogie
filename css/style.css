@@ -88,7 +88,7 @@ p {
 }
 
 #svgId{
-    max-height: 45vw;
+    /* max-height: 45vw; */
     margin: 5px auto 5px auto;
     text-align: center;
     /* display: none; */
