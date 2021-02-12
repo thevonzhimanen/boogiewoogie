@@ -83,21 +83,21 @@ p {
 #chartArea {
     /* max-height: 45vw; */
     /* max-width: 100vw; */
-    margin: 5px auto 5px auto;
+    margin: 5px 0 5px 0;
     text-align: center;
     display: block;
 }
 
 #svgId{
     /* max-height: 45vw; */
-    margin: 5px auto 5px auto;
+    margin: 5px 0 5px 0;
     text-align: center;
     display: block;
 }
 
 #mondrian {
     /* max-height: 45vw; */
-    margin: 10px auto 20px auto;
+    margin: 10px 0 20px 0;
     text-align: center;
     display: block;
 }
