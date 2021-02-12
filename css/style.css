@@ -53,7 +53,7 @@ p {
 }
 
 #legendWrapper {
-    margin: center;
+    margin: 5px auto 10px auto;
     text-align: center;
 }
 
@@ -81,16 +81,25 @@ p {
 }
 
 #chartArea {
-    max-height: 70vh;
-    max-height: 45vw;
+    /* max-height: 80vw; */
+    /* max-height: 45vw; */
     margin: auto;
     text-align: center;
     /* display: block; */
 }
 
+#svgId{
+    /* max-height: 70vh; */
+    /* max-height: 45vw; */
+    margin: 5px auto 5px auto;
+    text-align: center;
+    /* display: none; */
+    /* display: block; */
+}
+
 #mondrian {
     max-height: 70vh;
-    max-height: 45vw;
+    /* max-height: 45vw; */
     margin: 10px auto 20px auto;
     text-align: center;
     /* display: none; */
@@ -99,7 +108,7 @@ p {
 
 
 /* TABLET? + DESKTOP BELOW THIS LINE*/
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 870px) {
 
 
     body {
@@ -127,8 +136,8 @@ p {
 
 
     #canvas {
-        max-height: 70vh;
-        max-height: 45vw;
+        /* max-height: 70vh; */
+        /* max-height: 45vw; */
         grid-column: 2;
         grid-row: 2 / span 1;
         margin: 5px auto 2px auto;
@@ -136,7 +145,7 @@ p {
 
     #mondrian {
         max-height: 70vh;
-        max-height: 45vw;
+        /* max-height: 45vw; */
         grid-column: 2;
         grid-row: 2 / span 1;
         margin: 5px auto 2px auto;

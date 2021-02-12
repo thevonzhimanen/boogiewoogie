@@ -131,35 +131,40 @@ function fetchdata() {
             d3.select('#chartArea').selectAll('*').remove();
             //d3.select('svg').selectAll('*').remove();
 
+            vH = $(window).innerHeight();
+            vW = $(window).innerWidth();
+            canvasSize = .70 * Math.min(vH, vW);
+
             //create Boogie Woogie canvas
             const svg = d3.select("#chartArea").append("svg")
                 //canvas height and width
                 .attr("id","svgId")
                 // .attr('viewBox', '0 0 50 100');
-
-                .attr("width", "70vh")
-                .attr("height", "70vh")
+                .attr("width", canvasSize)
+                .attr("height", canvasSize)
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
             //.attr("viewBox", "0, 0, auto, auto");
 
             //
-            vH_unscaled = $(window).innerHeight();
-            vH = .70 * vH_unscaled
-            vW_unscaled = $(window).innerWidth();
-            vW = .70 * vW_unscaled
-            redraw(vH, vW)
+            // vH_unscaled = $(window).innerHeight();
+            // vH = .70 * vH_unscaled
+            // vW_unscaled = $(window).innerWidth();
+            // vW = .70 * vW_unscaled
+            // redraw(vH, vW)
 
             //set rectangle sizes
-            rectHeight = vH / 32;
-            rectWidth = vH / 32;
+            // rectHeight = vH / 32;
+            // rectWidth = vH / 32;
 
             //detect if window height changes
             $(window).on('resize', function () {
                 vH_unscaled = $(this).innerHeight();
                 vW_unscaled = $(this).innerWidth();
-                vH = .70 * vH_unscaled
-                vW = .70 * vW_unscaled
+                // vH =  vH_unscaled *.70 
+                // vW =  vW_unscaled * .70 
+                vH =  vH_unscaled  
+                vW =  vW_unscaled 
                 console.log("resize");
                 redraw(vH, vW);
             })
@@ -169,7 +174,9 @@ function fetchdata() {
                 svg.selectAll("*").remove();
                 vH = viewportHeight;
                 vW = viewportWidth;
-                rectSize = Math.min(vH, vW) / 32;
+                canvasSize = .70 * Math.min(vH, vW);
+                // rectSize = Math.min(vH, vW) / 32;
+                rectSize = canvasSize  / 32;
                 //rectHeight = vH / 32;
                 //rectWidth = rectHeight;
                 //change rectangle size based on new canvas size
@@ -197,10 +204,10 @@ function fetchdata() {
                 .append("rect")
                 //create a group for streets
                 .attr("class", "streets")
-                .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-                .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                .attr("height", vH / 32) // assigns height of rectangles to predefined height
-                .attr("width", vH / 32) // assigns width of rectangles to predefined width
+                .attr("x", (d, i) => canvasSize  / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
+                .attr("y", (d, i) => canvasSize  / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
+                .attr("height", canvasSize  / 32) // assigns height of rectangles to predefined height
+                .attr("width", canvasSize  / 32) // assigns width of rectangles to predefined width
                 .attr("stroke", "#06112b") //creates a stroke around the rectangle
                 //color based on speed
                 .attr("fill", function (d) {
@@ -238,13 +245,13 @@ function fetchdata() {
                         //create a group for buildings
                         .attr("class", "buildings")
                         .attr("x", function (d) {
-                            return d.x / 32 * vH;
+                            return d.x / 32 * canvasSize ;
                         })
                         .attr("y", function (d) {
-                            return d.y / 32 * vH;
+                            return d.y / 32 * canvasSize ;
                         })
-                        .attr("height", vH / 32) // assigns height to predefined height
-                        .attr("width", vH / 32) // assigns width to predefined width
+                        .attr("height", canvasSize  / 32) // assigns height to predefined height
+                        .attr("width", canvasSize  / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
                     });
