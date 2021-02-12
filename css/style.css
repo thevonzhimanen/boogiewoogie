@@ -81,16 +81,14 @@ p {
 }
 
 #chartArea {
-    /* max-height: 80vw; */
-    /* max-height: 45vw; */
+    max-height: 45vw;
     margin: auto;
     text-align: center;
     /* display: block; */
 }
 
 #svgId{
-    /* max-height: 70vh; */
-    /* max-height: 45vw; */
+    max-height: 45vw;
     margin: 5px auto 5px auto;
     text-align: center;
     /* display: none; */
@@ -98,11 +96,9 @@ p {
 }
 
 #mondrian {
-    max-height: 70vh;
-    /* max-height: 45vw; */
+    max-height: 45vw;
     margin: 10px auto 20px auto;
     text-align: center;
-    /* display: none; */
     display: block;
 }
 
