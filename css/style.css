@@ -110,7 +110,6 @@ p {
 /* TABLET? + DESKTOP BELOW THIS LINE*/
 @media screen and (min-width: 870px) {
 
-
     body {
         background-color: #06112b;
     }

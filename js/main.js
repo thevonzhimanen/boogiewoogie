@@ -26,68 +26,72 @@ var locRef = db.ref("images");
 //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
 
 function fetcharchive(dataOn) {
- fetchdata()
-    // //Normally, we would fire the ".on" method for the firebase data, but we already have that data stored in the dataOnce variable.
-
-    // /*
-    // //user authentication for security:
-    // var userId = firebase.auth().currentUser.uid;
-    // return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
-    //     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    // // ...
-    // });
-    // */
+    // this fetcharchive function isn't working, so I am by passing it and going straight to fetchdata. NDG 02/12/2021
+     fetchdata()
+    
+    //Normally, we would fire the ".on" method for the firebase data, but we already have that data stored in the dataOnce variable.
 
 
-    // //checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
+    // locRef.once("value", function fetcharchive(snapshot) {
 
-    // var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length - 1].substr(4));
-    // var timeNow = new Date().getTime();
-    // var timeDiff = Math.abs(timeNow - timeLast);
-    // if (timeDiff < 1800000) {
-    //     //time difference is less than 30 min, do nothing
-    //     console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
-    // } else {
-    //     //time difference is greater than 30 min, run fetchdata function
-    //     console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
-    //     fetchdata();
-    // }
 
-    // //to populate the archive images, iterate over each past data entry
-    // var parser = new DOMParser();
-    // Object.keys(dataOn).forEach(function (key) {
-    //     console.log("Firebase snapshot: ", key, dataOn[key]);
+        /*
+        //user authentication for security:
+        var userId = firebase.auth().currentUser.uid;
+        return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
+            var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+        // ...
+        });
+        */
 
-    //     //use dataOn[key].dataSVG to get the base64 version of each svg;    
-    //     var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
-    //     //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
-    //     var svgElement = doc.firstChild;
-    //     svgElement.setAttribute("width", "100%");
-    //     svgElement.setAttribute("height", "auto");
-    //     //svgElement.setAttribute("viewBox", "0 0 1 1");
 
-    //     //archiveElement contains both the svg and its title text:
-    //     var archiveElement = document.createElement("div");
-    //     archiveElement.id = dataOn[key].time;
-    //     archiveElement.className = "archive";
 
-    //     //titleElement contains the title text of the svg:
-    //     var titleElement = document.createElement("p");
-    //     var archiveTitle = document.createTextNode(dataOn[key].time + ":");
-    //     titleElement.appendChild(archiveTitle);
+        //checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
 
-    //     //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
-    //     archiveElement.appendChild(titleElement);
-    //     archiveElement.appendChild(svgElement);
+//         var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length - 1].substr(4));
+//         var timeNow = new Date().getTime();
+//         var timeDiff = Math.abs(timeNow - timeLast);
+//         if (timeDiff < 1800000) {
+//             //time difference is less than 30 min, do nothing
+//             console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+//         } else {
+//             //time difference is greater than 30 min, run fetchdata function
+//             console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+//             fetchdata();
+//         }
 
-    //     // archiveElement.setAttribute('viewBox', '0 0 100 100');
-    //     // archiveElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+//         //to populate the archive images, iterate over each past data entry
+//         var parser = new DOMParser();
+//         Object.keys(dataOn).forEach(function (key) {
+//             console.log("Firebase snapshot: ", key, dataOn[key]);
 
-    //     document.getElementById("archive").appendChild(archiveElement);
-    //     //consider using createDocumentFragment() method?
+//             //use dataOn[key].dataSVG to get the base64 version of each svg;    
+//             var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
+//             //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
+//             var svgElement = doc.firstChild;
+//             svgElement.setAttribute("width", "100%");
+//             svgElement.setAttribute("height", "auto");
+//             //svgElement.setAttribute("viewBox", "0 0 1 1");
 
-    // });
-}
+//             //archiveElement contains both the svg and its title text:
+//             var archiveElement = document.createElement("div");
+//             archiveElement.id = dataOn[key].time;
+//             archiveElement.className = "archive";
+
+//             //titleElement contains the title text of the svg:
+//             var titleElement = document.createElement("p");
+//             var archiveTitle = document.createTextNode(dataOn[key].time + ":");
+//             titleElement.appendChild(archiveTitle);
+
+//             //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
+//             archiveElement.appendChild(titleElement);
+//             archiveElement.appendChild(svgElement);
+//             document.getElementById("archive").appendChild(archiveElement);
+//             //consider using createDocumentFragment() method?
+
+//         });
+//     })
+};
 
 
 //request data from API    
@@ -134,7 +138,7 @@ function fetchdata() {
             //create Boogie Woogie canvas
             const svg = d3.select("#chartArea").append("svg")
                 //canvas height and width
-                .attr("id","svgId")
+                .attr("id", "svgId")
                 // .attr('viewBox', '0 0 50 100');
 
                 .attr("width", "70vh")
@@ -192,36 +196,36 @@ function fetchdata() {
 
                 //streets
                 rects = svg.selectAll("rect.streets")
-                .data(data)
-                .enter()
-                .append("rect")
-                //create a group for streets
-                .attr("class", "streets")
-                .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-                .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-                .attr("height", vH / 32) // assigns height of rectangles to predefined height
-                .attr("width", vH / 32) // assigns width of rectangles to predefined width
-                .attr("stroke", "#06112b") //creates a stroke around the rectangle
-                //color based on speed
-                .attr("fill", function (d) {
-                    if (d['speed'] > 20) {
-                        // blue
-                        // return "#518cd0";
-                        // return "#04bcbe";
-                        return "#518cd0";
-                    } else if (d['speed'] > 10) {
-                        // yellow
-                        // return "#ffd861";
-                        return "#eceb66";
-                    }
-                    // red
-                    return "#ff6661";
-                    // return "#eb1044";
-                })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide)
+                    .data(data)
+                    .enter()
+                    .append("rect")
+                    //create a group for streets
+                    .attr("class", "streets")
+                    .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
+                    .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
+                    .attr("height", vH / 32) // assigns height of rectangles to predefined height
+                    .attr("width", vH / 32) // assigns width of rectangles to predefined width
+                    .attr("stroke", "#06112b") //creates a stroke around the rectangle
+                    //color based on speed
+                    .attr("fill", function (d) {
+                        if (d['speed'] > 20) {
+                            // blue
+                            // return "#518cd0";
+                            // return "#04bcbe";
+                            return "#518cd0";
+                        } else if (d['speed'] > 10) {
+                            // yellow
+                            // return "#ffd861";
+                            return "#eceb66";
+                        }
+                        // red
+                        return "#ff6661";
+                        // return "#eb1044";
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
 
-                    // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
+                // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
                 // console.log(json)
                 // data3 = json
                 // create building grid
@@ -247,7 +251,7 @@ function fetchdata() {
                         .attr("width", vH / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
-                    });
+                });
 
 
             }
