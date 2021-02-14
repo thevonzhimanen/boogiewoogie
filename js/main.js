@@ -32,7 +32,7 @@ function fetcharchive(dataOn) {
     //Normally, we would fire the ".on" method for the firebase data, but we already have that data stored in the dataOnce variable.
 
 
-    // locRef.once("value", function fetcharchive(snapshot) {
+    locRef.once("value", function fetcharchive(snapshot) {
 
 
         /*
@@ -46,51 +46,51 @@ function fetcharchive(dataOn) {
 
 
 
-        //checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
+        // checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
 
-//         var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length - 1].substr(4));
-//         var timeNow = new Date().getTime();
-//         var timeDiff = Math.abs(timeNow - timeLast);
-//         if (timeDiff < 1800000) {
-//             //time difference is less than 30 min, do nothing
-//             console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
-//         } else {
-//             //time difference is greater than 30 min, run fetchdata function
-//             console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
-//             fetchdata();
-//         }
+        var timeLast = parseInt(Object.keys(dataOn)[Object.keys(dataOn).length - 1].substr(4));
+        var timeNow = new Date().getTime();
+        var timeDiff = Math.abs(timeNow - timeLast);
+        if (timeDiff < 1800000) {
+            //time difference is less than 30 min, do nothing
+            console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+        } else {
+            //time difference is greater than 30 min, run fetchdata function
+            console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+            fetchdata();
+        }
 
-//         //to populate the archive images, iterate over each past data entry
-//         var parser = new DOMParser();
-//         Object.keys(dataOn).forEach(function (key) {
-//             console.log("Firebase snapshot: ", key, dataOn[key]);
+        //to populate the archive images, iterate over each past data entry
+        var parser = new DOMParser();
+        Object.keys(dataOn).forEach(function (key) {
+            console.log("Firebase snapshot: ", key, dataOn[key]);
 
-//             //use dataOn[key].dataSVG to get the base64 version of each svg;    
-//             var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
-//             //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
-//             var svgElement = doc.firstChild;
-//             svgElement.setAttribute("width", "100%");
-//             svgElement.setAttribute("height", "auto");
-//             //svgElement.setAttribute("viewBox", "0 0 1 1");
+            //use dataOn[key].dataSVG to get the base64 version of each svg;    
+            var doc = parser.parseFromString(dataOn[key].dataSVG, "text/xml");
+            //create svg element, and populate it with the svg xml from the .data branch of the item in the firebase database;
+            var svgElement = doc.firstChild;
+            svgElement.setAttribute("width", "100%");
+            svgElement.setAttribute("height", "auto");
+            //svgElement.setAttribute("viewBox", "0 0 1 1");
 
-//             //archiveElement contains both the svg and its title text:
-//             var archiveElement = document.createElement("div");
-//             archiveElement.id = dataOn[key].time;
-//             archiveElement.className = "archive";
+            //archiveElement contains both the svg and its title text:
+            var archiveElement = document.createElement("div");
+            archiveElement.id = dataOn[key].time;
+            archiveElement.className = "archive";
 
-//             //titleElement contains the title text of the svg:
-//             var titleElement = document.createElement("p");
-//             var archiveTitle = document.createTextNode(dataOn[key].time + ":");
-//             titleElement.appendChild(archiveTitle);
+            //titleElement contains the title text of the svg:
+            var titleElement = document.createElement("p");
+            var archiveTitle = document.createTextNode(dataOn[key].time + ":");
+            titleElement.appendChild(archiveTitle);
 
-//             //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
-//             archiveElement.appendChild(titleElement);
-//             archiveElement.appendChild(svgElement);
-//             document.getElementById("archive").appendChild(archiveElement);
-//             //consider using createDocumentFragment() method?
+            //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
+            archiveElement.appendChild(titleElement);
+            archiveElement.appendChild(svgElement);
+            document.getElementById("archive").appendChild(archiveElement);
+            //consider using createDocumentFragment() method?
 
-//         });
-//     })
+        });
+    })
 };
 
 
