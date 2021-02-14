@@ -233,11 +233,11 @@ function fetchdata() {
 
                 
 
-                d3.csv("data/buildingBlock.csv", function (data) {
+                d3.csv("data/buildingBlock.csv", function (dataBuildings) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
                     
-                    data.x = parseInt(data.x);
-                    data.y = parseInt(data.y);
+                    dataBuildings.x = parseInt(dataBuildings.x);
+                    dataBuildings.y = parseInt(dataBuildings.y);
 
                     // console.log(data)
 
@@ -245,7 +245,7 @@ function fetchdata() {
                         .attr("class", "buildings");
 
                     buildings.selectAll("rect")
-                        .data(data)
+                        .data(dataBuildings)
                         .enter().append("rect")
                         //create a group for buildings
                         .attr("class", "buildings")
