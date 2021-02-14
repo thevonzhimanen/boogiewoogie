@@ -195,11 +195,12 @@ function fetchdata() {
                 svg.call(tip);
 
                 //streets
-                rects = svg.selectAll("rect.streets")
+                streets = svg.append("g")
+                        .attr("class", "streets");
+
+                streets.selectAll("rect")
                     .data(data)
-                    .enter()
-                    .append("rect")
-                    //create a group for streets
+                    .enter().append("rect")
                     .attr("class", "streets")
                     .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
@@ -229,14 +230,21 @@ function fetchdata() {
                 // console.log(json)
                 // data3 = json
                 // create building grid
+
+                
+
                 d3.csv("data/buildingBlock.csv", function (data) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-
+                    
                     data.x = parseInt(data.x);
                     data.y = parseInt(data.y);
 
-                    console.log(data)
-                    rects = svg.selectAll("rect.buildings")
+                    // console.log(data)
+
+                    buildings = svg.append("g")
+                        .attr("class", "buildings");
+
+                    buildings.selectAll("rect")
                         .data(data)
                         .enter().append("rect")
                         //create a group for buildings
