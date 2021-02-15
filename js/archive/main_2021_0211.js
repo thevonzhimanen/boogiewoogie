@@ -234,7 +234,7 @@ function fetcharchive(dataOn) {
                                     // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                                     // text += "<span>Location: </span>" + d['link_name'] + '<br>'
                                     text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
-                                    // , text += "x= "+d.x+" y= "+d.y
+                                    , text += "x= "+d.x+" y= "+d.y
                                     // text += "<span>Timestamp: </span>" + d['data_as_of']
                                     return text;
                                 })
@@ -332,9 +332,9 @@ function fetcharchive(dataOn) {
                         .attr("width", vH / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
-                    // .on('mouseover', tip.show)
-                    // .on('mouseout', tip.hide)
-                    // .attr("fill-opacity","0.6")
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+                    .attr("fill-opacity","0.6")
 
                 });
 

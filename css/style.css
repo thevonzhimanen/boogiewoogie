@@ -105,12 +105,12 @@ p {
 
 
 
-/* TABLET? + DESKTOP BELOW THIS LINE*/
+/* TABLET + DESKTOP BELOW THIS LINE*/
 @media screen and (min-width: 875px )   {
 
-    body {
+    /* body {
         background-color: #06112b;
-    }
+    } */
 
     .grid-container {
         display: grid;

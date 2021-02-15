@@ -27,8 +27,8 @@ var locRef = db.ref("images");
 
 function fetcharchive(dataOn) {
     // this fetcharchive function isn't working, so I am by passing it and going straight to fetchdata. NDG 02/12/2021
-     fetchdata()
-    
+    fetchdata()
+
     //Normally, we would fire the ".on" method for the firebase data, but we already have that data stored in the dataOnce variable.
 
 
@@ -188,15 +188,14 @@ function fetchdata() {
                         // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                         // text += "<span>Location: </span>" + d['link_name'] + '<br>'
                         text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
-                        // , text += "x= "+d.x+" y= "+d.y
+                        // text += " x= " + d.x + " y= " + d['y']
                         // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
 
-                //streets
                 streets = svg.append("g")
-                        .attr("class", "streets");
+                    .attr("class", "streets");
 
                 streets.selectAll("rect")
                     .data(data)
@@ -226,18 +225,16 @@ function fetchdata() {
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
 
-                // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
-                // console.log(json)
-                // data3 = json
-                // create building grid
 
-                
-
-                d3.csv("data/buildingBlock.csv", function (dataBuildings) {
+                d3.csv("data/mondrianBlock11.csv", function (dataBuildings) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-                    
+
                     dataBuildings.x = parseInt(dataBuildings.x);
                     dataBuildings.y = parseInt(dataBuildings.y);
+
+                    
+                    // data.x = parseInt(data.x);
+                    // data.y = parseInt(data.y);
 
                     // console.log(data)
 
@@ -259,6 +256,7 @@ function fetchdata() {
                         .attr("width", vH / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
+                        
                 });
 
 
