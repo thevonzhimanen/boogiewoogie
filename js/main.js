@@ -33,12 +33,14 @@ function fetchdata() {
         beforeSend: function () {
             // Show image container
             // $("#loaderGif").css("display:block !important");
+
         },
         //automated requests every half hour
         complete: function (data) {
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
             //setTimeout(fetchdata, 1800000);
+            
             var chartArea = document.getElementById("chartArea");
             return data, chartArea;
             
@@ -77,6 +79,7 @@ function updateTime() {
 setInterval(updateTime, 1000) 
 
 function drawSVG(data, container, scaleFactor){
+
             console.log(data);
             //display retrieved data sample in the browser
             $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
@@ -95,10 +98,12 @@ function drawSVG(data, container, scaleFactor){
             //create Boogie Woogie canvas
             const svg = d3.select(container).append("svg")
                 //canvas height and width
+
                 .attr("id", container)
                 // .attr('viewBox', '0 0 50 100');
                 .attr("width", widthAttribute.toString()+"vh")
                 .attr("height", heightAttribute.toString()+"vh")
+
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
             //.attr("viewBox", "0, 0, auto, auto");
@@ -144,15 +149,17 @@ function drawSVG(data, container, scaleFactor){
                         // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                         // text += "<span>Location: </span>" + d['link_name'] + '<br>'
                         text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
-                        // , text += "x= "+d.x+" y= "+d.y
+                        // text += " x= " + d.x + " y= " + d['y']
                         // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
 
+
                 //streets
                 streets = svg.append("g")
                         .attr("class", "streets");
+
 
                 streets.selectAll("rect")
                     .data(data)
@@ -215,13 +222,16 @@ function drawSVG(data, container, scaleFactor){
                         .attr("width", vH / 32) // assigns width to predefined width
                         .attr("stroke", "#06112b")
                         .attr("fill", "#06112b")
+
                 });
             }
 }
 
+
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
+
 
 $(document).ready(function(){
     console.log("document ready!");
@@ -229,6 +239,7 @@ $(document).ready(function(){
     //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
     //".once" method fires once at the beginning
     locRef.once("value", function (snapshot) {
+
         /*
         //user authentication for security:
         var userId = firebase.auth().currentUser.uid;
@@ -237,6 +248,7 @@ $(document).ready(function(){
         // ...
         });
         */
+
         $("#loaderGif").show();
         document.getElementById("mondrian").style.display = "none";
         var chartArea = document.getElementById("chartArea");
@@ -290,3 +302,4 @@ $(document).ready(function(){
         return dataOnce;
     })
 });
+
