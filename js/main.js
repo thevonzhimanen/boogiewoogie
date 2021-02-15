@@ -226,7 +226,7 @@ function fetchdata() {
                     .on('mouseout', tip.hide)
 
 
-                d3.csv("data/mondrianBlock11.csv", function (dataBuildings) {
+                d3.csv("data/buildingBlock.csv", function (dataBuildings) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
 
                     dataBuildings.x = parseInt(dataBuildings.x);
