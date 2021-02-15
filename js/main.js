@@ -194,12 +194,6 @@ function drawSVG(data, container, scaleFactor){
                 // data3 = json
                 // create building grid
 
-<<<<<<< HEAD
-                d3.csv("data/buildingBlock.csv", function (dataBuildings) {
-                    // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-=======
-                
->>>>>>> b6f1f0cfe4b953f5551d898c2d3c2924a3975ce7
 
                 d3.csv("data/buildingBlock.csv", function (dataBuildings) {
                     // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
