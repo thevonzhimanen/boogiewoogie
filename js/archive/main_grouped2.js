@@ -31,6 +31,7 @@ d3.csv("data/buildingBlock.csv", function (data1) {
     })
 });
 
+
 //request data from API    
 function fetchdata() {
 
@@ -98,7 +99,8 @@ function drawSVG(data, container, scaleFactor){
             // $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
 
             //d3 ____________________________________________________________________
-            
+
+
             //clear canvas for new data load...
             d3.select(container).selectAll('*').remove();
     
@@ -161,6 +163,7 @@ function drawSVG(data, container, scaleFactor){
 
                 // https://stackoverflow.com/questions/17817849/d3-js-how-to-join-data-from-more-sources
                 //streets
+                
                 streets = svg.append("g")
                         .attr("class", "streets");
 
@@ -188,7 +191,11 @@ function drawSVG(data, container, scaleFactor){
                     .on('mouseover', tip.show)
                     .on('mouseout', tip.hide)
 
+              
                         // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
+                        
+                        
+    
                         buildings = svg.append("g")
                             .attr("class", "buildings");
     
@@ -207,12 +214,16 @@ function drawSVG(data, container, scaleFactor){
                             .attr("width", vH / 32) // assigns width to predefined width
                             .attr("stroke", "#06112b")
                             .attr("fill", "#06112b")
+                
+
+
             }
 }
 
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
+
 $(document).ready(function(){
     console.log("document ready!");
     //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
@@ -223,15 +234,12 @@ $(document).ready(function(){
         document.getElementById("mondrian").style.display = "none";
         var chartArea = document.getElementById("chartArea");
         var dataOnce = snapshot.val();
-
         //the JSONData variable is the JSON format of the last request. Can use that to draw a canvas while you wait for the next request to come in.
         var dataJSONLast = Object.values(dataOnce)[Object.keys(dataOnce).length - 1].dataJSON;
-
         // checking time since last request and proceeding or not proceeding with a new request if it's been more than 30 miutes:
         var timeLast = parseInt(Object.keys(dataOnce)[Object.keys(dataOnce).length-1].substr(4));
         var timeNow = new Date().getTime();
         var timeDiff = Math.abs(timeNow - timeLast);
-
         if (timeDiff < 1800000) {
             //time difference is less than 30 min, do nothing but set timer for remainder of time before running fetchdata function
             console.log("No new request made since " + timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
@@ -251,18 +259,15 @@ $(document).ready(function(){
             var archiveElement = document.createElement("div");
             archiveElement.id = dataOnce[key].id;
             archiveElement.className = "archive"; 
-
             //archiveTitle contains the title text of the svg:
             var titleElement = document.createElement("p");
             var archiveTitle = document.createTextNode(dataOnce[key].time+":");
             titleElement.appendChild(archiveTitle);
-
             //archiveCanvas contains the svg:
             var archiveCanvas = document.createElement("div");
             archiveCanvas.id = dataOnce[key].time;
             var dataJSON = dataOnce[key].dataJSON;
             drawSVG(dataJSON, archiveCanvas, .25);
-
             //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
             archiveElement.appendChild(titleElement);
             archiveElement.appendChild(archiveCanvas);
