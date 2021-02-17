@@ -19,6 +19,12 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 var locRef = db.ref("images");
 
+var dataBuildings;
+d3.csv("data/buildingBlock.csv", function(result){
+    dataBuildings = result;
+});
+
+
 //request data from API    
 function fetchdata() {
 
@@ -33,37 +39,18 @@ function fetchdata() {
         beforeSend: function () {
             // Show image container
             // $("#loaderGif").css("display:block !important");
-
         },
-        //automated requests every half hour
         complete: function (data) {
+            var data = data.responseJSON;
             alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
-            //setTimeout(fetchdata, 1800000);
-            
             var chartArea = document.getElementById("chartArea");
-            return data, chartArea;
-            
-            drawSVG(data, chartArea, 0.70),
-
-            function writedata(data) {
-            var t = new Date();
-            var timeid = t.getTime();
-            var timeStamp = t.toISOString().replace(/:/g, "-").replace(".", "-");
-            var filename = "img-" + timeid;
-            //how to take the svg/xml structure and simply write it to firebase?
-            //var dataSVG = (new XMLSerializer()).serializeToString(document.getElementById("chartArea").getElementsByTagName("svg").item(0));
-
-            console.log(timeid, timeStamp, filename, data);
-
-            db.ref('images/' + filename).set({
-                id: filename,
-                dataSVG: "dataSVG",
-                dataJSON: data,
-                time: timeStamp
-                });
-            }          
-        },   
+            //return data, chartArea;
+        }
+    }).done(function (data){
+            console.log(data);
+            drawSVG(data, chartArea, 0.70);
+            writedata(data);
     });
 }
 
@@ -79,13 +66,7 @@ function updateTime() {
 setInterval(updateTime, 1000) 
 
 function drawSVG(data, container, scaleFactor){
-
             console.log(data);
-            //display retrieved data sample in the browser
-            $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
-            $("#time").text("Last updated time: " + data[0]["data_as_of"].substring(11, 16));
-            $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
-
             //d3 ____________________________________________________________________
 
 
@@ -98,12 +79,10 @@ function drawSVG(data, container, scaleFactor){
             //create Boogie Woogie canvas
             const svg = d3.select(container).append("svg")
                 //canvas height and width
-
-                .attr("id", container)
+                .attr("id", container.id+"-svg")
                 // .attr('viewBox', '0 0 50 100');
                 .attr("width", widthAttribute.toString()+"vh")
                 .attr("height", heightAttribute.toString()+"vh")
-
                 .attr("style", "outline: thin solid #adadad")
                 .attr("style", "display: block");
             //.attr("viewBox", "0, 0, auto, auto");
@@ -149,17 +128,15 @@ function drawSVG(data, container, scaleFactor){
                         // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
                         // text += "<span>Location: </span>" + d['link_name'] + '<br>'
                         text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
-                        // text += " x= " + d.x + " y= " + d['y']
+                        // , text += "x= "+d.x+" y= "+d.y
                         // text += "<span>Timestamp: </span>" + d['data_as_of']
                         return text;
                     })
                 svg.call(tip);
 
-
                 //streets
                 streets = svg.append("g")
                         .attr("class", "streets");
-
 
                 streets.selectAll("rect")
                     .data(data)
@@ -195,43 +172,35 @@ function drawSVG(data, container, scaleFactor){
                 // create building grid
 
                 
-
-                d3.csv("data/buildingBlock.csv", function (dataBuildings) {
-                    // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-                    
-                    dataBuildings.x = parseInt(dataBuildings.x);
-                    dataBuildings.y = parseInt(dataBuildings.y);
-
-                    // console.log(data)
-
-                    buildings = svg.append("g")
-                        .attr("class", "buildings");
-
-                    buildings.selectAll("rect")
-                        .data(dataBuildings)
-                        .enter().append("rect")
-                        //create a group for buildings
-                        .attr("class", "buildings")
-                        .attr("x", function (d) {
-                            return d.x / 32 * vH;
-                        })
-                        .attr("y", function (d) {
-                            return d.y / 32 * vH;
-                        })
-                        .attr("height", vH / 32) // assigns height to predefined height
-                        .attr("width", vH / 32) // assigns width to predefined width
-                        .attr("stroke", "#06112b")
-                        .attr("fill", "#06112b")
-
-                });
+                // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
+                dataBuildings.x = parseInt(dataBuildings.x);
+                dataBuildings.y = parseInt(dataBuildings.y);
+                
+                buildings = svg.append("g")
+                    .attr("class", "buildings");
+                buildings.selectAll("rect")
+                    .data(dataBuildings)
+                    .enter().append("rect")
+                    //create a group for buildings
+                    .attr("class", "buildings")
+                    .attr("x", function (d) {
+                        return d.x / 32 * vH;
+                    })
+                    .attr("y", function (d) {
+                        return d.y / 32 * vH;
+                    })
+                    .attr("height", vH / 32) // assigns height to predefined height
+                    .attr("width", vH / 32) // assigns width to predefined width
+                    .attr("stroke", "#06112b")
+                    .attr("fill", "#06112b")
+                
             }
+    return(console.log(vH, rectSize));
 }
-
 
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
-
 
 $(document).ready(function(){
     console.log("document ready!");
@@ -239,7 +208,6 @@ $(document).ready(function(){
     //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
     //".once" method fires once at the beginning
     locRef.once("value", function (snapshot) {
-
         /*
         //user authentication for security:
         var userId = firebase.auth().currentUser.uid;
@@ -248,7 +216,6 @@ $(document).ready(function(){
         // ...
         });
         */
-
         $("#loaderGif").show();
         document.getElementById("mondrian").style.display = "none";
         var chartArea = document.getElementById("chartArea");
@@ -264,15 +231,21 @@ $(document).ready(function(){
         var timeDiff = Math.abs(timeNow - timeLast);
         if (timeDiff < 1800000) {
             //time difference is less than 30 min, do nothing but set timer for remainder of time before running fetchdata function
-            console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+            console.log("No new request made since " + timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
             setTimeout(fetchdata, timeDiff);
         } else {
             //time difference is greater than 30 min, run fetchdata function
-            console.log(timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
+            console.log("Request made since " + timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
             fetchdata();
         }
 
         drawSVG(dataJSONLast, chartArea, 0.70);
+                  
+        //display retrieved data sample in the browser
+        $("#date").text("Last updated day: " + dataJSONLast[0]["data_as_of"].substring(0, 10));
+        $("#time").text("Last updated time: " + dataJSONLast[0]["data_as_of"].substring(11, 16));
+        $("#speed").text("Speed of first...Make Avg TBD: " + dataJSONLast[0]['speed']);
+        
         $("#loaderGif").hide();
         
         //to populate the archive images, iterate over each past data entry
@@ -299,7 +272,25 @@ $(document).ready(function(){
             archiveElement.appendChild(archiveCanvas);
             document.getElementById("archive").appendChild(archiveElement);   
         });
+        
         return dataOnce;
-    })
+    });
 });
+    
+ function writedata(data) {
+        var t = new Date();
+        var timeid = t.getTime();
+        var timeStamp = t.toISOString().replace(/:/g, "-").replace(".", "-");
+        var filename = "img-" + timeid;
+        //how to take the svg/xml structure and simply write it to firebase?
+        //var dataSVG = (new XMLSerializer()).serializeToString(document.getElementById("chartArea").getElementsByTagName("svg").item(0));
 
+        console.log(timeid, timeStamp, filename, data);
+
+        db.ref('images/' + filename).set({
+            id: filename,
+            dataSVG: "dataSVG",
+            dataJSON: data,
+            time: timeStamp
+            });
+}
