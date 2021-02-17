@@ -146,21 +146,21 @@ function drawSVG(data, container, scaleFactor){
                     .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
                     .attr("height", vH / 32) // assigns height of rectangles to predefined height
                     .attr("width", vH / 32) // assigns width of rectangles to predefined width
-                    .attr("stroke", "#06112b") //creates a stroke around the rectangle
+                    .attr("stroke", "#f3f3f3") //creates a stroke around the rectangle
                     //color based on speed
                     .attr("fill", function (d) {
                         if (d['speed'] > 20) {
                             // blue
                             // return "#518cd0";
                             // return "#04bcbe";
-                            return "#518cd0";
+                            return "#006ae3";
                         } else if (d['speed'] > 10) {
                             // yellow
                             // return "#ffd861";
-                            return "#eceb66";
+                            return "#ffdb00";
                         }
                         // red
-                        return "#ff6661";
+                        return "#e30000";
                         // return "#eb1044";
                     })
                     .on('mouseover', tip.show)
@@ -191,8 +191,8 @@ function drawSVG(data, container, scaleFactor){
                     })
                     .attr("height", vH / 32) // assigns height to predefined height
                     .attr("width", vH / 32) // assigns width to predefined width
-                    .attr("stroke", "#06112b")
-                    .attr("fill", "#06112b")
+                    .attr("stroke", "#f3f3f3")
+                    .attr("fill", "#f3f3f3")
                 
             }
     return(console.log(vH, rectSize));
@@ -253,7 +253,7 @@ $(document).ready(function(){
                         
             var archiveElement = document.createElement("div");
             archiveElement.id = dataOnce[key].id;
-            archiveElement.className = "archive"; 
+            archiveElement.className = "archivedCanvas";
 
             //archiveTitle contains the title text of the svg:
             var titleElement = document.createElement("p");
@@ -270,7 +270,7 @@ $(document).ready(function(){
             //push both svg and title into the archiveElement, then push that into the Archived Canvases container:
             archiveElement.appendChild(titleElement);
             archiveElement.appendChild(archiveCanvas);
-            document.getElementById("archive").appendChild(archiveElement);   
+            document.getElementById("archive").appendChild(archiveElement);
         });
         
         return dataOnce;
