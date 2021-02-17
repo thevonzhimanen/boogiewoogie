@@ -1,21 +1,21 @@
 /* Mobile. Scroll down past media query to change Desktop specific CSS */
 body {
-    background-color: #06112b;
+    /* background-color: #06112b; */
     /* background-color: lightgreen; */
 }
 
 h1 {
-    color: #ff6661;
+    color: black;
     padding: 10px;
 }
 
 
 h2 {
-    color: #eceb66;
+    color: gray;
 }
 
 p {
-    color: #518cd0;
+    color: black;
 }
 
 .d3-tip {
@@ -58,19 +58,19 @@ p {
 }
 
 #slow {
-    color: #ff6661;
+    color: #e30000;
     margin: auto;
     padding: auto;
 }
 
 #moderate {
-    color: #eceb66;
+    color: #ffdb00;
     margin: auto;
     padding: auto;
 }
 
 #fast {
-    color: #518cd0;
+    color: #006ae3;
     margin: auto;
     padding: auto;
 }
@@ -86,6 +86,7 @@ p {
     margin: 5px 0 5px 0;
     text-align: center;
     display: block;
+    z-index: 8;
 }
 
 #svgId{
@@ -102,8 +103,8 @@ p {
     display: block;
 }
 
-
-
+.archivedCanvas{
+    }
 
 /* TABLET + DESKTOP BELOW THIS LINE*/
 @media screen and (min-width: 875px )   {
@@ -175,11 +176,11 @@ p {
     #archive {
         grid-column: 1;
         grid-row: 2/ span 1;
-        background-color: #142650;
+        background-color: #f3f3f3;
         margin: 20px 20px auto 20px;
         overflow: auto;
         align-content: center;
-        color: #ff6661;
+        color: black;
         padding: 20px;
         font-family: 'Montserrat', sans-serif;
         height: 70vh;
@@ -192,8 +193,8 @@ p {
     #description {
         grid-column: 3;
         grid-row: 2/ span 1;
-        background-color: #142650;
-        color: #ff6661;
+        background-color: #f3f3f3;
+        color: black;
         margin: 20px 40px 10px 10px;
         /* align: center; */
         font-family: 'Montserrat', sans-serif;
