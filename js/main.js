@@ -260,6 +260,7 @@ $(document).ready(function () {
             //archiveCanvas contains the svg:
             var archiveCanvas = document.createElement("div");
             archiveCanvas.id = dataOnce[key].time;
+            archiveElement.className = "archiveCanvas";
             var dataJSON = dataOnce[key].dataJSON;
             drawSVG(dataJSON, archiveCanvas, .25);
 

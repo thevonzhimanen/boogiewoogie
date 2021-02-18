@@ -103,11 +103,23 @@ p {
 }
 
 
-
+.archive{
+    text-align: center;
+}
 
 /* TABLET + DESKTOP BELOW THIS LINE*/
 @media screen and (min-width: 875px )   {
 
+    .archive{
+        text-align: center;
+        margin: auto;
+    }
+
+    .archiveCanvas{
+        /* display:None; */
+        margin: auto;
+        text-align: center;
+    }
     /* body {
         background-color: #06112b;
     } */
