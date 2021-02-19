@@ -19,17 +19,13 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 var locRef = db.ref("images");
 
-var chartArea = document.getElementById("chartArea");
 
-// load the buildings dataset
-var buildingsData = []
-d3.csv("data/buildingBlock.csv", function (data1) {
-    data1.x = parseInt(data1.x);
-    data1.y = parseInt(data1.y);
-    data1.forEach(function (element) {
-        buildingsData.push(element);
-    })
+var dataBuildings;
+d3.csv("data/buildingBlock.csv", function(result){
+    dataBuildings = result;
 });
+
+
 
 //request data from API    
 function fetchdata() {
@@ -47,14 +43,18 @@ function fetchdata() {
             // $("#loaderGif").css("display:block !important");
         },
         complete: function (data) {
-            data = data.responseJSON
-            alert("Retrieved " + data.responseJSON.length + " records from the dataset!");
 
+            var data = data.responseJSON;
+            alert("Retrieved " + data.length + " records from the dataset!");
             console.log(data);
+            var chartArea = document.getElementById("chartArea");
+            //return data, chartArea;
         }
-    }).done(function (data) {
-        drawSVG(data, chartArea, 0.70)
-        writedata(data)
+    }).done(function (data){
+            console.log(data);
+            drawSVG(data, chartArea, 0.70);
+            writedata(data);
+
     });
 };
 //setTimeout(fetchdata, 1800000);
@@ -88,136 +88,164 @@ function updateTime() {
     $('#clock').text(d);
 }
 
-setInterval(updateTime, 1000)
 
-function drawSVG(data, container, scaleFactor) {
-    // console.log(data);
-    //display retrieved data sample in the browser
-    $("#date").text("Last updated day: " + data[0]["data_as_of"].substring(0, 10));
-    $("#time").text("Last updated time: " + data[0]["data_as_of"].substring(11, 16));
-    // $("#speed").text("Speed of first...Make Avg TBD: " + data[0]['speed']);
+setInterval(updateTime, 1000) 
 
-    //d3 ____________________________________________________________________
+function drawSVG(data, container, scaleFactor){
+            console.log(data);
+            //d3 ____________________________________________________________________
 
-    //clear canvas for new data load...
-    d3.select(container).selectAll('*').remove();
 
-    var widthAttribute = scaleFactor * 100;
-    var heightAttribute = scaleFactor * 100;
-    console.log(widthAttribute.toString() + "vh", heightAttribute.toString() + "vh");
-    //create Boogie Woogie canvas
-    const svg = d3.select(container).append("svg")
-        //canvas height and width
-        .attr("id", container)
-        // .attr('viewBox', '0 0 50 100');
-        .attr("width", widthAttribute.toString() + "vh")
-        .attr("height", heightAttribute.toString() + "vh")
-        .attr("style", "outline: thin solid #adadad")
-        .attr("style", "display: block");
-    //.attr("viewBox", "0, 0, auto, auto");
+            //clear canvas for new data load...
+            d3.select(container).selectAll('*').remove();
+    
+            var widthAttribute = scaleFactor*100;
+            var heightAttribute = scaleFactor*100;
+            console.log(widthAttribute.toString()+"vh", heightAttribute.toString()+"vh");
+            //create Boogie Woogie canvas
+            const svg = d3.select(container).append("svg")
+                //canvas height and width
+                .attr("id", container.id+"-svg")
+                // .attr('viewBox', '0 0 50 100');
+                .attr("width", widthAttribute.toString()+"vh")
+                .attr("height", heightAttribute.toString()+"vh")
+                .attr("style", "outline: thin solid #adadad")
+                .attr("style", "display: block");
+            //.attr("viewBox", "0, 0, auto, auto");
 
-    //
-    vH_unscaled = $(window).innerHeight();
-    vH = (scaleFactor) * vH_unscaled
-    vW_unscaled = $(window).innerWidth();
-    vW = (scaleFactor) * vW_unscaled
-    redraw(vH, vW)
+            //
+            vH_unscaled = $(window).innerHeight();
+            vH = (scaleFactor) * vH_unscaled
+            vW_unscaled = $(window).innerWidth();
+            vW = (scaleFactor) * vW_unscaled
+            redraw(vH, vW)
 
-    //set rectangle sizes
-    rectHeight = vH / 32;
-    rectWidth = vH / 32;
+            //set rectangle sizes
+            rectHeight = vH / 32;
+            rectWidth = vH / 32;
 
-    //detect if window height changes
-    $(window).on('resize', function () {
-        vH_unscaled = $(this).innerHeight();
-        vW_unscaled = $(this).innerWidth();
-        vH = scaleFactor * vH_unscaled
-        vW = scaleFactor * vW_unscaled
-        console.log("resize");
-        redraw(vH, vW);
-    })
-
-    //resize canvas if window height changes
-    function redraw(viewportHeight, viewportWidth) {
-        svg.selectAll("*").remove();
-        vH = viewportHeight;
-        vW = viewportWidth;
-        rectSize = Math.min(vH, vW) / 32;
-        //rectHeight = vH / 32;
-        //rectWidth = rectHeight;
-        //change rectangle size based on new canvas size
-        console.log("rectSize is now" + rectSize);
-        console.log("vHeight is now" + vH);
-
-        //tooltip
-        const tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .html(d => d)
-            .html(d => {
-                text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
-                return text;
+            //detect if window height changes
+            $(window).on('resize', function () {
+                vH_unscaled = $(this).innerHeight();
+                vW_unscaled = $(this).innerWidth();
+                vH = scaleFactor * vH_unscaled
+                vW = scaleFactor * vW_unscaled
+                console.log("resize");
+                redraw(vH, vW);
             })
-        svg.call(tip);
 
-        // https://stackoverflow.com/questions/17817849/d3-js-how-to-join-data-from-more-sources
-        //streets
-        streets = svg.append("g")
-            .attr("class", "streets");
+            //resize canvas if window height changes
+            function redraw(viewportHeight, viewportWidth) {
+                svg.selectAll("*").remove();
+                vH = viewportHeight;
+                vW = viewportWidth;
+                rectSize = Math.min(vH, vW) / 32;
+                //rectHeight = vH / 32;
+                //rectWidth = rectHeight;
+                //change rectangle size based on new canvas size
+                console.log("rectSize is now" + rectSize);
+                console.log("vHeight is now" + vH);
 
-        streets.selectAll("rect")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "streets")
-            .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
-            .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
-            .attr("height", vH / 32) // assigns height of rectangles to predefined height
-            .attr("width", vH / 32) // assigns width of rectangles to predefined width
-            .attr("stroke", "#06112b") //creates a stroke around the rectangle
-            //color based on speed
-            .attr("fill", function (d) {
-                if (d['speed'] > 20) {
-                    // blue
-                    return "#518cd0";
-                } else if (d['speed'] > 10) {
-                    // yellow
-                    return "#eceb66";
-                }
-                // red
-                return "#ff6661";
-            })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+                //tooltip
+                const tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .html(d => d)
+                    .html(d => {
+                        // let text = "<span>Borough: </span>" + d['borough'] + '<br>'
+                        // text += "<span>Location: </span>" + d['link_name'] + '<br>'
+                        text = "<span>Speed: </span>" + d['speed'] + "<span> mph</span>"
+                        // , text += "x= "+d.x+" y= "+d.y
+                        // text += "<span>Timestamp: </span>" + d['data_as_of']
+                        return text;
+                    })
+                svg.call(tip);
 
-        // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
-        buildings = svg.append("g")
-            .attr("class", "buildings");
+                //streets
+                streets = svg.append("g")
+                        .attr("class", "streets");
 
-        buildings.selectAll("rect")
-            .data(buildingsData)
-            .enter().append("rect")
-            //create a group for buildings
-            .attr("class", "buildings")
-            .attr("x", function (d) {
-                return d.x / 32 * vH;
-            })
-            .attr("y", function (d) {
-                return d.y / 32 * vH;
-            })
-            .attr("height", vH / 32) // assigns height to predefined height
-            .attr("width", vH / 32) // assigns width to predefined width
-            .attr("stroke", "#06112b")
-            .attr("fill", "#06112b")
-    }
+                streets.selectAll("rect")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "streets")
+                    .attr("x", (d, i) => vH / 32 * (i % 32)) //arrays columns of rectangles (x-axis)
+                    .attr("y", (d, i) => vH / 32 * Math.floor(i / 32)) // array rows of rectangles (y-axis)
+                    .attr("height", vH / 32) // assigns height of rectangles to predefined height
+                    .attr("width", vH / 32) // assigns width of rectangles to predefined width
+                    .attr("stroke", "#f3f3f3") //creates a stroke around the rectangle
+                    //color based on speed
+                    .attr("fill", function (d) {
+                        if (d['speed'] > 20) {
+                            // blue
+                            // return "#518cd0";
+                            // return "#04bcbe";
+                            return "#006ae3";
+                        } else if (d['speed'] > 10) {
+                            // yellow
+                            // return "#ffd861";
+                            return "#ffdb00";
+                        }
+                        // red
+                        return "#e30000";
+                        // return "#eb1044";
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+
+                // $.getJSON("https://cors-anywhere.herokuapp.com/json/building.json", function(json) {
+                // console.log(json)
+                // data3 = json
+                // create building grid
+
+                
+                // https://stackoverflow.com/questions/18151455/d3-js-create-objects-on-top-of-each-other/18461464
+                dataBuildings.x = parseInt(dataBuildings.x);
+                dataBuildings.y = parseInt(dataBuildings.y);
+                
+                buildings = svg.append("g")
+                    .attr("class", "buildings");
+                buildings.selectAll("rect")
+                    .data(dataBuildings)
+                    .enter().append("rect")
+                    //create a group for buildings
+                    .attr("class", "buildings")
+                    .attr("x", function (d) {
+                        return d.x / 32 * vH;
+                    })
+                    .attr("y", function (d) {
+                        return d.y / 32 * vH;
+                    })
+                    .attr("height", vH / 32) // assigns height to predefined height
+                    .attr("width", vH / 32) // assigns width to predefined width
+                    .attr("stroke", "#f3f3f3")
+                    .attr("fill", "#f3f3f3")
+                
+            }
+    return(console.log(vH, rectSize));
+
 }
 
 //https://makitweb.com/how-to-fire-ajax-request-on-regular-interval/#:~:text=Use%20setInterval()%20when%20you,use%20the%20setTimeout()%20function.
 //automate
 //use express on ready if using node.js
-$(document).ready(function () {
+
+
+$(document).ready(function(){
+
     console.log("document ready!");
     //before starting the fetchdata function, need to immediately read from archive and put the previous-requested svg on the canvas
     //".once" method fires once at the beginning
     locRef.once("value", function (snapshot) {
+
+        /*
+        //user authentication for security:
+        var userId = firebase.auth().currentUser.uid;
+        return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
+            var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+        // ...
+        });
+        */
+
         $("#loaderGif").show();
 
         document.getElementById("mondrian").style.display = "none";
@@ -244,13 +272,21 @@ $(document).ready(function () {
 
         //draw the most recent chart..This should also grab the buildings data (but something needs to change for that to happen, apparently..).
         drawSVG(dataJSONLast, chartArea, 0.70);
+                  
+        //display retrieved data sample in the browser
+        $("#date").text("Last updated day: " + dataJSONLast[0]["data_as_of"].substring(0, 10));
+        $("#time").text("Last updated time: " + dataJSONLast[0]["data_as_of"].substring(11, 16));
+        $("#speed").text("Speed of first...Make Avg TBD: " + dataJSONLast[0]['speed']);
+        
         $("#loaderGif").hide();
 
         //to populate the archive images, iterate over each past data entry
         Object.keys(dataOnce).forEach(function (key) {
             var archiveElement = document.createElement("div");
             archiveElement.id = dataOnce[key].id;
-            archiveElement.className = "archive";
+
+            archiveElement.className = "archivedCanvas";
+
 
             //archiveTitle contains the title text of the svg:
             var titleElement = document.createElement("p");
@@ -269,6 +305,27 @@ $(document).ready(function () {
             archiveElement.appendChild(archiveCanvas);
             document.getElementById("archive").appendChild(archiveElement);
         });
+        
         return dataOnce;
-    })
+
+    });
 });
+    
+ function writedata(data) {
+        var t = new Date();
+        var timeid = t.getTime();
+        var timeStamp = t.toISOString().replace(/:/g, "-").replace(".", "-");
+        var filename = "img-" + timeid;
+        //how to take the svg/xml structure and simply write it to firebase?
+        //var dataSVG = (new XMLSerializer()).serializeToString(document.getElementById("chartArea").getElementsByTagName("svg").item(0));
+
+        console.log(timeid, timeStamp, filename, data);
+
+        db.ref('images/' + filename).set({
+            id: filename,
+            dataSVG: "dataSVG",
+            dataJSON: data,
+            time: timeStamp
+            });
+}
+
