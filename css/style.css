@@ -67,6 +67,7 @@ p {
     color: #ffdb00;
     margin: auto;
     padding: auto;
+    font-weight: bold;
 }
 
 #fast {
@@ -103,12 +104,163 @@ p {
     display: block;
 }
 
+#canvasOverlay{
+    position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+}
+
+#clickMe{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center; 
+}
+
+#canvas:hover #canvasOverlay{
+    opacity: 1
+}
+
+/* fade in */
+.fade_in {
+    animation: fadeIn ease 5s;
+    -webkit-animation: fadeIn ease 5s;
+    -moz-animation: fadeIn ease 5s;
+    -o-animation: fadeIn ease 5s;
+    -ms-animation: fadeIn ease 5s;
+    animation-delay: fadeIn ease 5s;
+  }
+
+
+  @keyframes fadeIn{
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+
+  /* fade out */
+.fade_out{
+        animation: fadeOut ease 5s;
+        -webkit-animation: fadeOut ease 5s;
+        -moz-animation: fadeOut ease 5s;
+        -o-animation: fadeOut ease 5s;
+        -ms-animation: fadeOut ease 5s;
+        animation-delay: fadeOut ease 5s;
+      }
+      
+@keyframes fadeOut{
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  
+  @-moz-keyframes fadeOut{
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  @-webkit-keyframes fadeOut{
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  
+  @-o-keyframes fadeOut{
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  
+  @-ms-keyframes fadeOut{
+    0% {
+      opacity:1;
+    }
+    100% {
+      opacity:0;
+    }
+  }
+  
+
 .archivedCanvas{
     }
+
+#archive > div{
+    margin-bottom: 5vh
+}
 
 /* TABLET + DESKTOP BELOW THIS LINE*/
 @media screen and (min-width: 875px )   {
 
+    .archive{
+        text-align: center;
+        margin: auto;
+    }
+
+    .archiveCanvas{
+        /* display:None; */
+        margin: auto;
+        text-align: center;
+    }
     /* body {
         background-color: #06112b;
     } */
