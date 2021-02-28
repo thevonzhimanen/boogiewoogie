@@ -104,6 +104,7 @@ p {
     display: block;
 }
 
+
 #canvasOverlay{
     position: absolute;
   top: 0;
@@ -131,13 +132,15 @@ p {
 }
 
 /* fade in */
-.fade_in {
+
     animation: fadeIn ease 5s;
     -webkit-animation: fadeIn ease 5s;
     -moz-animation: fadeIn ease 5s;
     -o-animation: fadeIn ease 5s;
     -ms-animation: fadeIn ease 5s;
+
     animation-delay: fadeIn ease 5s;
+
   }
 
 
