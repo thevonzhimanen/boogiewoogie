@@ -317,7 +317,7 @@ $(document).ready(function(){
         var timeNow = new Date().getTime();
         var timeDiff = Math.abs(timeNow - timeLast);
 
-        if (timeDiff < 1000) {
+        if (timeDiff < 1800000) {
             //time difference is less than 30 min, do nothing but set timer for remainder of time before running fetchdata function
             console.log("No new request made since " + timeDiff + "milliseconds / " + timeDiff / 60000 + "mins since last request");
             setTimeout(fetchdata, timeDiff);
